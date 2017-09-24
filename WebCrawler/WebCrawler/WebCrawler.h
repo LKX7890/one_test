@@ -5,12 +5,37 @@ class WebCrawler
 {
 public:
 
+	WebCrawler(UrlFilter &filter);
+	~WebCrawler();
+
+	void Init(bool daemon = false);
+	void ExecMultiIO();
+	void StartJob(void);
+	void StopJob(bool success = true);
+
 	Log m_log;
 	Configurator m_cfg;
+	MultiIO m_multiIO;
+	PluginMngr m_pluginMngr;
+	UrlQueues m_urlQueues;
+	DnsThread m_dnsThread;
+	SendThread m_sendThread;
 
 private:
-	static void sigalrm(int signum);
-	void initDaemon(void) const;
-	bool initMaxFiles(rlim_t maxFiles)const;
+
+	static void Sigalrm(int signum);
+	void InitDaemon(void) const;
+	bool InitMaxFiles(rlim_t maxFiles)const;
+	void InitSeeds(void);
+	void InitDns(void);
+	void InitTicker(void)const;
+	void InitSend(void);
+
+	int m_cur_jobs;
+	time_t m_start;
+	unsigned int m_success;
+	unsigned int m_failure;
+	pthreas_mutex_t m_mutex;
+	pthread_cond_t m_cond;
 };
 #endif
