@@ -24,11 +24,12 @@ class DnsUrl : public RawUrl
 public:
 
 	explicit DnsUrl(RawUrl const &rawUrl);
+	string toFilename(void) const;
 	bool attachDomain(string &strUrl) const;
 
-	string m_domain;
-	string m_path;
-	string m_ip;
-	short m_port;
+	string m_domain;		// 服务器域名
+	string m_path;			// 资源路径
+	string m_ip;			// 地址
+	short m_port;			// 通信端口
 };
 #endif
