@@ -69,6 +69,7 @@ bool SaveImageToFile::Handler(void *arg)
 			return;
 		}
 
+		// 包体就是资源数据
 		if (!ofs.write(res->m_body, res->m_len))
 		{
 			g_app->m_log.printf(Log::LEVEL_WAR, __FILE__, __LINE__, "写入文件%s失败：%s", fiename.c_str(), strerror(errno));

@@ -12,7 +12,7 @@ public:
 	string m_contentType;		// 内容类型
 };
 
-class HttpResponse
+class HttpResponse				// 超文本传输协议响应
 {
 public:
 
