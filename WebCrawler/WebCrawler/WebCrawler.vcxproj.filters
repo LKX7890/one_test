@@ -36,6 +36,12 @@
     <ClInclude Include="Configurator.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="HttpHeader.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Url.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="StrKit.cpp">
@@ -48,6 +54,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Configurator.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Url.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

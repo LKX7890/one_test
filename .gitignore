@@ -16,3 +16,6 @@
 *.vcxproj
 *.filters
 *.filters
+*.filters
+WebCrawler/WebCrawler/WebCrawler.vcxproj.filters
+WebCrawler/WebCrawler/WebCrawler.vcxproj.filters
