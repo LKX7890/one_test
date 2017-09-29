@@ -5,7 +5,7 @@ VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WebCrawler", "WebCrawler\WebCrawler.vcxproj", "{F8543F62-FCAA-46C4-91F6-BD46F977381E}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Plugins", "Plugins\Plugins.vcxproj", "{496C2F5B-AFDF-4169-970F-CCB130BE0391}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Plugins", "Plugins\Plugins.vcxproj", "{6A01B789-4E44-4418-A7C6-2BD30EECC85C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{F8543F62-FCAA-46C4-91F6-BD46F977381E}.Debug|Win32.Build.0 = Debug|Win32
 		{F8543F62-FCAA-46C4-91F6-BD46F977381E}.Release|Win32.ActiveCfg = Release|Win32
 		{F8543F62-FCAA-46C4-91F6-BD46F977381E}.Release|Win32.Build.0 = Release|Win32
-		{496C2F5B-AFDF-4169-970F-CCB130BE0391}.Debug|Win32.ActiveCfg = Debug|Win32
-		{496C2F5B-AFDF-4169-970F-CCB130BE0391}.Debug|Win32.Build.0 = Debug|Win32
-		{496C2F5B-AFDF-4169-970F-CCB130BE0391}.Release|Win32.ActiveCfg = Release|Win32
-		{496C2F5B-AFDF-4169-970F-CCB130BE0391}.Release|Win32.Build.0 = Release|Win32
+		{6A01B789-4E44-4418-A7C6-2BD30EECC85C}.Debug|Win32.ActiveCfg = Debug|Win32
+		{6A01B789-4E44-4418-A7C6-2BD30EECC85C}.Debug|Win32.Build.0 = Debug|Win32
+		{6A01B789-4E44-4418-A7C6-2BD30EECC85C}.Release|Win32.ActiveCfg = Release|Win32
+		{6A01B789-4E44-4418-A7C6-2BD30EECC85C}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

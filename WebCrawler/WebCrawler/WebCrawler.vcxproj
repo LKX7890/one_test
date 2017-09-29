@@ -64,22 +64,28 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="BloomFilter.h" />
     <ClInclude Include="common.h" />
     <ClInclude Include="Configurator.h" />
     <ClInclude Include="HttpHeader.h" />
     <ClInclude Include="Log.h" />
     <ClInclude Include="Plugin.h" />
     <ClInclude Include="PluginMngr.h" />
+    <ClInclude Include="Socket.h" />
     <ClInclude Include="StrKit.h" />
     <ClInclude Include="Url.h" />
+    <ClInclude Include="UrlQueues.h" />
     <ClInclude Include="WebCrawler.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BloomFilter.cpp" />
     <ClCompile Include="Configurator.cpp" />
     <ClCompile Include="Log.cpp" />
     <ClCompile Include="PluginMngr.cpp" />
+    <ClCompile Include="Socket.cpp" />
     <ClCompile Include="StrKit.cpp" />
     <ClCompile Include="Url.cpp" />
+    <ClCompile Include="UrlQueues.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

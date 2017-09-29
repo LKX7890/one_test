@@ -11,6 +11,7 @@ bool HeaderFilter::Handler(void *rag)
 {
 	HttpHeader *header = static_cast<HttpHeader*>(arg);
 
+	// 协议状态码有对应的意义
 	if (header->m_statusCode < 200 || 300 <= header->m_statusCode)
 	{
 		g_app->m_log.printf(Log::LEVEL_DBG, __FILE__, __LINE__, "超文本传输协议响应状态码%d不在合理区间[200, 300]之内"，
@@ -19,6 +20,7 @@ bool HeaderFilter::Handler(void *rag)
 		return false;
 	}
 
+	// 若超文本传输协议响应内容类型不是超文本标记语言
 	if (header->m_contentType.find("text/html", 0) == string::npos)
 	{
 		vector<string>::const_iterator it;
