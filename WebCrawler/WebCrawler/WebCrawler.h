@@ -2,6 +2,7 @@
 #define __WEBCRAWLER_H__
 
 #include "Configurator.h"
+#include "PluginMngr.h"
 
 class WebCrawler
 {
