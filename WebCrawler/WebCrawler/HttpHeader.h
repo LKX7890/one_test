@@ -2,13 +2,14 @@
 #define __HTTP_HEADER_H__
 
 #include "common.h"
+#include "Url.h"
 
 class HttpHeader
 {
 public:
 
-	int m_statusCode;
-	string m_contentType;
+	int m_statusCode;			// 状态码
+	string m_contentType;		// 内容类型
 };
 
 class HttpResponse
@@ -27,9 +28,9 @@ public:
 		m_len = 0;
 	}
 
-	DnsUrl m_dnsUrl;
-	HttpHeader m_header;
-	char *m_body;
-	size_t m_len;
+	DnsUrl m_dnsUrl;		// 资源定位符
+	HttpHeader m_header;	// 协议响应包头
+	char *m_body;			// 包体指针
+	size_t m_len;			// 包体长度
 };
 #endif

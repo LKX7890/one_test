@@ -1,6 +1,8 @@
 #ifndef __WEBCRAWLER_H__
 #define __WEBCRAWLER_H__
 
+#include "Configurator.h"
+
 class WebCrawler
 {
 public:
