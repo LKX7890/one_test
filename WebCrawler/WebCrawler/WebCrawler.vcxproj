@@ -69,6 +69,7 @@
     <ClInclude Include="Configurator.h" />
     <ClInclude Include="HttpHeader.h" />
     <ClInclude Include="Log.h" />
+    <ClInclude Include="MultiIo.h" />
     <ClInclude Include="Plugin.h" />
     <ClInclude Include="PluginMngr.h" />
     <ClInclude Include="Socket.h" />
@@ -81,6 +82,7 @@
     <ClCompile Include="BloomFilter.cpp" />
     <ClCompile Include="Configurator.cpp" />
     <ClCompile Include="Log.cpp" />
+    <ClCompile Include="MultiIo.cpp" />
     <ClCompile Include="PluginMngr.cpp" />
     <ClCompile Include="Socket.cpp" />
     <ClCompile Include="StrKit.cpp" />

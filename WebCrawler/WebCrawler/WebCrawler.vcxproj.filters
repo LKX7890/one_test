@@ -42,6 +42,18 @@
     <ClInclude Include="Url.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="BloomFilter.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Socket.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="UrlQueues.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="MultiIo.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="StrKit.cpp">
@@ -57,6 +69,18 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Url.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="BloomFilter.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Socket.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="UrlQueues.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="MultiIo.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

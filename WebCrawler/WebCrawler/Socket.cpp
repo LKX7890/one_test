@@ -111,6 +111,7 @@ bool Socket::recvResponse(void)
 	{
 		char buf[1024] = {};
 
+		// 接收，就一个字符
 		ssize_t rlen = recv(m_sockfd, buf, sizeof(buf) - sizeof(buf[0]), 0);
 
 		if (-1 == rlen)
@@ -126,27 +127,32 @@ bool Socket::recvResponse(void)
 			return false;
 		}
 
+		// 服务器关闭连接
 		if (!rlen)
 		{
-			g_app->m_log.printf(Log::LEVEL_DBG, __FILE__, __LINE__, "接收超文本传输协议响应保胎%u字节"， res.m_len);
+			g_app->m_log.printf(Log::LEVEL_DBG, __FILE__, __LINE__, "接收超文本传输协议响应包%u字节"， res.m_len);
 
+			// 抽出Url
 			if (res.m_header.m_contentType.find("text/html", 0) != string::npos)
 			{
 				g_app->m_urlQueues.extractUrl(res.m_body, m_dnsUrl);
 			}
 
-			g_app->m_pluginMngr.RegisterHtmlPlugin(&res);
+			g_app->m_pluginMngr.UrlPluginHandle(&res);
 
 			break;
 		}
 
+		// 按现存包体长度写入
 		res.m_body = (char *)realloc(res.m_body, res.m_len + rlen + sizeof(res.m_body[0]));
 
 		memcpy(res.m_body + res.m_len, buf, rlen + sizeof(res.m_body[0]));
-		res.m_len += rlen;
+		res.m_len += rlen;  // 增加包体长度，不要'\0'
 
+		// 若包头未解析
 		if (!headerParsed)
 		{
+			// 查找包头结束语
 			char *p = strstr(res.m_body, "\r\n\r\n");
 			if (p)
 			{
@@ -161,9 +167,13 @@ bool Socket::recvResponse(void)
 
 				headerParsed = true;
 
+				// 跳过结束语位置后的位置减去起点位置
 				p += 4;
 				res.m_len -= p - res.m_body;
+
 				char *tmp = new char[res.m_len + sizeof(res.m_body[0])];
+
+				// 此处虽然添加了空字符，当再次接收是按现存实际包体长度后写入
 				memcpy(tmp, p, res.m_len + sizeof(res.m_body[0]));
 				memcpy(res.m_body, tmp, res.m_len + sizeof(res.m_body[0]));
 
@@ -173,5 +183,49 @@ bool Socket::recvResponse(void)
 	}
 
 	return true;
+}
+
+int Socket::sockfd(void) const
+{
+	return m_sockfd;
+}
+
+HttpHeader Socket::parseHeader(string str) const
+{
+	HttpHeader header = {};
+
+	string::size_type pos = str.find("\r\n", 0);
+	if (pos != string::npos)
+	{
+		vector<string> strv = StrKit::StrSplit(str.substr(0, pos), " ", 2);
+
+		if (strv.size() == 3)
+		{
+			// 获得状态吗
+			header.m_statusCode = atoi(strv[1].c_str());
+		}
+		else
+		{
+			// 状态码为600，即无法解析的响应包
+			header.m_statusCode = 600;
+		}
+
+		str = str.substr(pos + 2)；
+	}
+
+	while ((pos = str.find("\r\n", 0)) != string::npos)
+	{
+		// 解析内容类型
+		vector<string> strv = StrKit::StrSplit(str.substr(0, pos), ":", 1);
+		if (strv.size() == 2 && !strcasecmp(strv[0].c_str(), "content-type"))
+		{
+			header.m_contentType = strv[1];
+			break;
+		}
+
+		str = str.substr(pos + 2);
+	}
+
+	return header;
 }
 
