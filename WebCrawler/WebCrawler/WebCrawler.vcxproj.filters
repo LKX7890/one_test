@@ -54,6 +54,21 @@
     <ClInclude Include="MultiIo.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Thread.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="SendThread.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="RecvThread.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="DnsThread.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Hash.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="StrKit.cpp">
@@ -81,6 +96,18 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="MultiIo.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Thread.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="SendThread.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="RecvThread.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="DnsThread.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
