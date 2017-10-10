@@ -7,14 +7,14 @@ BloomFilter::BloomFilter(void)
 	bzero(m_bllomTable, sizeof(m_bloomTable));
 }
 
-bool BloomFilter::exist(string const &strUrl)
+bool BloomFilter::IsUrlExist(string const &strUrl)
 {
 	int one = 0;
 
 	for (int i = 0; i < HASH_FUNCS; ++i)
 	{
 		//
-		unsigned int bit = hash(i, strUrl) % (sizeof(m_bloomTable) * 8);
+		unsigned int bit = RecalHash(i, strUrl) % (sizeof(m_bloomTable) * 8);
 		unsigned int idx = bit / (sizeof(m_bloomTable[0]) * 8);
 		bit %= sizeof(m_bloomTable[0]) * 8;
 
@@ -31,14 +31,14 @@ bool BloomFilter::exist(string const &strUrl)
 	return one == HASH_FUNCS;
 }
 
-unsigned int BloomFilter::hash(int id, string const &strUrl) const
+unsigned int BloomFilter::RecalHash(int id, string const &strUrl) const
 {
 	unsigned int val = 0;
 
 	switch (id)
 	{
 	case 0:
-		val = m_hash.times33(strUrl);
+		val = m_hash.RecalHashByTimes33(strUrl);
 		break;
 
 	case 1:

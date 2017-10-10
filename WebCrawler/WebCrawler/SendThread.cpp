@@ -2,7 +2,7 @@
 
 
 
-void * SendThread::run(void)
+void * SendThread::ThreadHandlerFunc(void)
 {
 	g_app->m_log.printf(Log::LEVEL_DBG, __FILE__, __LINE__, "发送线程开始");
 

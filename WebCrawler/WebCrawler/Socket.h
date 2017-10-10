@@ -1,6 +1,10 @@
 #ifndef __SOCKET_H__
 #define __SOCKET_H__
 
+#include "common.h"
+#include "Url.h"
+#include "HttpHeader.h"
+
 class Socket
 {
 public:

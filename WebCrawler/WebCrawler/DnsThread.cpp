@@ -2,7 +2,7 @@
 
 
 
-void * DnsThread::run(void)
+void * DnsThread::ThreadHandlerFunc(void)
 {
 	g_app->m_log.printf(Log::LEVEL_DBG, __FILE__, __LINE__, "DNS线程开始");
 

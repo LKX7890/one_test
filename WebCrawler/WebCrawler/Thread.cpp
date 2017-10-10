@@ -2,14 +2,14 @@
 
 
 
-void Thread::start(void)
+void Thread::ThreadStart(void)
 {
 	pthread_attr_t attr;
 	pthread_attr_init(&attr);
 	pthread_attr_setstacksize(&attr, 1024 * 1024);
 	pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED);
 
-	int error = pthread_create(&m_tid, &attr, run, this);
+	int error = pthread_create(&m_tid, &attr, ThreadRun, this);
 	if (error)
 	{
 		g_app->m_log.printf(Log::LEVEL_ERR, __FILE__, __LINE__, "pthread_create: %s", strerror(error));
@@ -18,7 +18,7 @@ void Thread::start(void)
 	pthread_attr_destroy(&attr);
 }
 
-void * Thread::run(void *arg)
+void * Thread::ThreadRun(void *arg)
 {
-	return static_cast<Thread*>(arg)->run();
+	return static_cast<Thread*>(arg)->ThreadHandlerFunc();
 }

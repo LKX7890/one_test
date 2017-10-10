@@ -80,6 +80,7 @@
     <ClInclude Include="StrKit.h" />
     <ClInclude Include="Thread.h" />
     <ClInclude Include="Url.h" />
+    <ClInclude Include="UrlFilter.h" />
     <ClInclude Include="UrlQueues.h" />
     <ClInclude Include="WebCrawler.h" />
   </ItemGroup>
@@ -87,7 +88,9 @@
     <ClCompile Include="BloomFilter.cpp" />
     <ClCompile Include="Configurator.cpp" />
     <ClCompile Include="DnsThread.cpp" />
+    <ClCompile Include="Hash.cpp" />
     <ClCompile Include="Log.cpp" />
+    <ClCompile Include="Main.cpp" />
     <ClCompile Include="MultiIo.cpp" />
     <ClCompile Include="PluginMngr.cpp" />
     <ClCompile Include="RecvThread.cpp" />

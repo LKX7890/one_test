@@ -1,6 +1,8 @@
 #ifndef  __CONFIGURATOR_H__
 #define  __CONFIGURATOR_H__
 
+#include "common.h"
+
 class Configurator
 {
 public:

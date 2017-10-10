@@ -12,7 +12,7 @@ RecvThread::~RecvThread(void)
 	delete m_socket;
 }
 
-void * RecvThread::run(void)
+void * RecvThread::ThreadHandlerFunc(void)
 {
 	g_app->m_log.printf(Log::LEVEL_DBG, __FILE__, __LINE__, "接收线程开始");
 

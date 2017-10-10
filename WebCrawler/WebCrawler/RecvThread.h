@@ -14,7 +14,7 @@ public:
 
 private:
 
-	void *run(void);
+	void *ThreadHandlerFunc(void);
 	Socket *m_socket;
 };
 #endif

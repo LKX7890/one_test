@@ -3,6 +3,11 @@
 
 #include "Configurator.h"
 #include "PluginMngr.h"
+#include "Log.h"
+#include "MultiIo.h"
+#include "UrlQueues.h"
+#include "DnsThread.h"
+#include "SendThread.h"
 
 class WebCrawler
 {
@@ -18,7 +23,7 @@ public:
 
 	Log m_log;
 	Configurator m_cfg;
-	MultiIO m_multiIO;
+	MultiIo m_multiIO;
 	PluginMngr m_pluginMngr;
 	UrlQueues m_urlQueues;
 	DnsThread m_dnsThread;

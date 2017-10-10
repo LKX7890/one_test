@@ -12,6 +12,8 @@
 #include <thread>
 #include <fstream>
 #include <strings.h>
+#include <map>
+#include <list>
 
 using namespace std;
 #endif

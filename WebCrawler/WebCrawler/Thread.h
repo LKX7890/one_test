@@ -6,12 +6,12 @@ class Thread
 public:
 
 	virtual ~Thread(void){}
-	void start(void);
+	void ThreadStart(void);
 
 private:
 
-	static void *run(void *arg);
-	virtual void *run(void) = 0;
+	static void *ThreadRun(void *arg);
+	virtual void *ThreadHandlerFunc(void) = 0;
 
 	pthread_t m_tid;
 };

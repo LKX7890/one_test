@@ -9,6 +9,6 @@ class SendThread : public Thread
 {
 private:
 
-	void *run(void);
+	void *ThreadHandlerFunc(void);
 };
 #endif

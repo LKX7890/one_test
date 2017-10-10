@@ -1,6 +1,10 @@
 #ifndef __PLUGINMNGR_H__
 #define __PLUGINMNGR_H__
 
+#include "common.h"
+
+class Plugin;
+
 class PluginMngr
 {
 public:
@@ -20,4 +24,5 @@ private:
 	vector<Plugin*> m_headerPlugins;	// 响应包头插件容量
 	vector<Plugin*> m_htmlPlugins;		// 超文本标记语言插件向量
 };
+
 #endif

@@ -2,6 +2,8 @@
 #define __URLQUEUES_H__
 
 #include "Url.h"
+#include "common.h"
+
 class UrlFilter;
 
 class UrlQueues
