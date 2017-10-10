@@ -35,7 +35,7 @@ unsigned int Hash::RecalHashByTimes33(
 // TimesN哈希算法
 // 返回参数字符串的32位哈希值
 // hash(i) = hash(i-1)×N+str[i] (hash(-1) = 0)
-unsigned int Hash::timesnum(
+unsigned int Hash::RecalHashByTimesnum(
 	string const& str, // [输入] 被哈希字符串
 	int           num  // [输入] N
 	) const {
@@ -50,7 +50,7 @@ unsigned int Hash::timesnum(
 
 // AP哈希算法
 // 返回参数字符串的32位哈希值
-unsigned int Hash::aphash(
+unsigned int Hash::RecalHashByAphash(
 	string const& str // [输入] 被哈希字符串
 	) const {
 	unsigned int val = 0;
@@ -67,7 +67,7 @@ unsigned int Hash::aphash(
 
 // FNV哈希算法
 // 返回参数字符串的32位哈希值
-unsigned int Hash::hash16777619(
+unsigned int Hash::RecalHashByHash16777619(
 	string const& str // [输入] 被哈希字符串
 	) const {
 	unsigned int val = 0;
@@ -83,7 +83,7 @@ unsigned int Hash::hash16777619(
 
 // MySQL哈希算法
 // 返回参数字符串的32位哈希值
-unsigned int Hash::mysqlhash(
+unsigned int Hash::RecalHashByMysqlhash(
 	string const& str // [输入] 被哈希字符串
 	) const {
 	unsigned int nr1 = 1, nr2 = 4;
@@ -99,7 +99,7 @@ unsigned int Hash::mysqlhash(
 
 // 循环冗余校验算法
 // 返回参数字符串的循环冗余校验码
-unsigned int Hash::crc32(
+unsigned int Hash::RecalHashByCrc32(
 	string const& str // [输入] 被校验字符串
 	) const {
 	unsigned int val = 0xFFFFFFFF;

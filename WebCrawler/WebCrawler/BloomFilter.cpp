@@ -42,31 +42,31 @@ unsigned int BloomFilter::RecalHash(int id, string const &strUrl) const
 		break;
 
 	case 1:
-		val = m_hash.timesnum(strUrl, 31);
+		val = m_hash.RecalHashByTimesnum(strUrl, 31);
 		break;
 
 	case 2:
-		val = m_hash.aphash(strUrl);
+		val = m_hash.RecalHashByAphash(strUrl);
 		break;
 
 	case 3:
-		val = m_hash.hash16777619(strUrl);
+		val = m_hash.RecalHashByHash16777619(strUrl);
 		break;
 		
 	case 4:
-		val = m_hash.mysqlhash(strUrl);
+		val = m_hash.RecalHashByMysqlhash(strUrl);
 		break;
 
 	case 5:
-		val = m_hash.crc32(strUrl);
+		val = m_hash.RecalHashByCrc32(strUrl);
 		break;
 
 	case 6:
-		val = m_hash.timesnum(strUrl, 131);
+		val = m_hash.RecalHashByTimesnum(strUrl, 131);
 		break;
 
 	case 7:
-		val = m_hash.timesnum(strUrl, 1313);
+		val = m_hash.RecalHashByTimesnum(strUrl, 1313);
 		break;
 
 	default:

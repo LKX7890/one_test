@@ -9,11 +9,11 @@ public:
 
 	Hash(void);
 	unsigned int RecalHashByTimes33(string const &str) const;
-	unsigned int timesnum(string const &str, int num) const;
-	unsigned int aphash(string const &str) const;
-	unsigned int hash16777619(string const &str) const;
-	unsigned int mysqlhash(string const &str) const;
-	unsigned int crc32(string const &str) const;
+	unsigned int RecalHashByTimesnum(string const &str, int num) const;
+	unsigned int RecalHashByAphash(string const &str) const;
+	unsigned int RecalHashByHash16777619(string const &str) const;
+	unsigned int RecalHashByMysqlhash(string const &str) const;
+	unsigned int RecalHashByCrc32(string const &str) const;
 
 private:
 
