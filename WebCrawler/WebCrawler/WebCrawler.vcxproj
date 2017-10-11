@@ -100,6 +100,7 @@
     <ClCompile Include="Thread.cpp" />
     <ClCompile Include="Url.cpp" />
     <ClCompile Include="UrlQueues.cpp" />
+    <ClCompile Include="WebCrawler.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

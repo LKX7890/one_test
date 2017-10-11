@@ -4,7 +4,7 @@
 BloomFilter g_filter;
 WebCrawler *g_app = new WebCrawler(g_filter);
 
-static void showVersion(void)
+static void ShowVersion(void)
 {
 	cout << endl;
 
@@ -12,7 +12,7 @@ static void showVersion(void)
 	cout << endl;
 }
 
-static void splashScreen(void)
+static void SplashScreen(void)
 {
 	cout << endl;
 
@@ -31,7 +31,7 @@ static void splashScreen(void)
 	cout << endl;
 }
 
-static void showUsage(string const &cmd)
+static void ShowUsage(string const &cmd)
 {
 	cout << endl;
 	cout << "用法：" << cmd << "[-v|-d|-h]" << endl;
@@ -46,12 +46,12 @@ int main(int argc, char *argv[])
 	bool daemon = false;
 
 	char ch;
-	while ((ch = getopt(argc, argv, "vdh")) != -1)
+	while ((ch = getopt(argc, argv, "vdh")) != -1)	// 分析命令行参数
 	{
 		switch (ch)
 		{
 		case 'v':
-			showVersion();
+			ShowVersion();
 			return EXIT_SUCCESS;
 
 		case 'd':
@@ -60,7 +60,7 @@ int main(int argc, char *argv[])
 
 		case 'h':
 		case '?':
-			showUsage(argv[0]);
+			ShowUsage(argv[0]);
 			return EXIT_SUCCESS;
 
 		default:
@@ -68,7 +68,7 @@ int main(int argc, char *argv[])
 		}
 	}
 
-	splashScreen();
+	SplashScreen();
 	g_app->Init(daemon);
 	g_app->exec();
 
