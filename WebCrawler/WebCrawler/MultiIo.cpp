@@ -12,7 +12,7 @@ MultiIo::~MultiIo(void)
 	close(m_epoll);
 }
 
-bool MultiIo::add(int fd, epoll_event &event) const
+bool MultiIo::AddSockfdToEpoll(int fd, epoll_event &event) const
 {
 	if (epoll_crl(m_epoll, EPOLL_CTL_ADD, fd, &event) == -1)
 	{
@@ -24,7 +24,7 @@ bool MultiIo::add(int fd, epoll_event &event) const
 	return true;
 }
 
-bool MultiIo::del(int fd, epoll_event &event) const
+bool MultiIo::DelSockfdFromEpoll(int fd, epoll_event &event) const
 {
 	if (epoll_ctl(m_epoll, EPOLL_CTL_DEL, fd, &event) == -1)
 	{

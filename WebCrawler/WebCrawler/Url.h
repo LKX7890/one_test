@@ -12,7 +12,7 @@ public:
 	}ETYPE;
 
 	RawUrl(string const *strUrl, ETYPE type = ETYPE_HTML, int depth = 0);
-	static bool normalized(string *strUrl);
+	static bool FormattingRawUrl(string &strUrl);
 
 	string m_strUrl;
 	ETYPE m_type;

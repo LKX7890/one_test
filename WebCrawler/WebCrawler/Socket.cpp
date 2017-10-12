@@ -18,6 +18,7 @@ Socket::Socket(DnsUrl const &dnsUrl) : m_sockfd(-1), m_dnsUrl(dnsUrl)
 
 bool Socket::sendRequest(void)
 {
+	// 创建套接字
 	if ((m_sockfd = socket(PF_INET, SOCK_STREA, 0)) == -1)
 	{
 		g_app->m_log.printf(Log::LEVEL_WAR, __FILE__, __LINE__, "socket: %s", strerror(errno));
@@ -27,6 +28,7 @@ bool Socket::sendRequest(void)
 
 	g_app->m_log.printf(Log::LEVEL_DBG, __FILE__, __LINE__, "创建套接字%d成功"， m_sockfd);
 
+	// 初始化
 	sockaddr_in addr;
 	bzero(&addr, sizeof(addr));
 	add.sin_family = AF_INET;
@@ -39,6 +41,7 @@ bool Socket::sendRequest(void)
 		return false;
 	}
 
+	// 请求连接
 	if (connect(m_sockfd, (sockaddr*)&addr, sizeof(addr)) == -1)
 	{
 		g_app->m_log.printf(Log::LEVEL_WAR, __FILE__, __LINE__, "connect: %s", strerror(errno));
@@ -65,11 +68,12 @@ bool Socket::sendRequest(void)
 		"User-Agent: Mozilla/5.0 (compatible; Qteqpidspider/1.0;)\r\n"
 		"Referer: " << m_dnsUrl.m_domain << "\r\n\r\n";
 
+	// 获取流字符串
 	string request = oss.str();
 	char const *buf = request.c_str();
 
+	// 循环发送
 	SSIZE_T slen;
-
 	for (size_t len = request.size(); len; len -= slen, buf += slen)
 	{
 		if ((slen = send(m_sockfd, buf, len, 0)) == -1)
@@ -89,8 +93,10 @@ bool Socket::sendRequest(void)
 
 	g_app->m_log.printf(Log::LEVEL_DBG, __FILE__, __LINE__, "发送超文本传输协议请求包%u字节\n\n%s", request.size(), request.c_str());
 
+	// 关注此套接字
 	epoll_event event = { EPOLLIN | EPOLLET, this };
 
+	// 将此套接字加入多路io
 	if (!g_app->m_multiIo.add(m_sockfd, event))
 	{
 		return false;

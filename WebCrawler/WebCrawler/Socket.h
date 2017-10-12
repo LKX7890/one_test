@@ -19,6 +19,6 @@ private:
 
 	HttpHeader parseHeader(string str) const;    // 超文本传输协议响应
 	int m_sockfd;								 // 套接字描述符
-	DnsUrl m_dnsUrl;							 
+	DnsUrl m_dnsUrl;
 };
 #endif

@@ -33,7 +33,7 @@ void UrlQueues::pushRawUrl(RawUrl const &rawUrl)
 			rawUrl.m_strUrl.c_str());
 	}
 
-	else if (g_app->m_pluginMngr.RegisterUrlPlugin(const_cast<RawUrl*>(&RawUrl)))
+	else if (g_app->m_pluginMngr.RegisterUrlPlugin(const_cast<RawUrl*>(&rawUrl)))
 	{
 		// 达到上限，挂起
 		while (0 <= g_app->m_cfg.maxRawUrls && (size_t)g_app->m_cfg.m_maxRawUrls <= m_rawUrlQueue.size())
@@ -257,7 +257,7 @@ void UrlQueues::extractUrl(char const *html, DnsUrl const &dnsUrl)
 		g_app->m_log.printf(Log::LEVEL_DBG, __FILE__, __LINE__, "抽取到一个深度为%d的统一资源定位符\"%s\"",
 			dnsUrl.m_depth + 1, strUrl.c_str());
 
-		if (!RawUrl::normalized(strUrl))
+		if (!RawUrl::FormattingRawUrl(strUrl))
 		{
 			g_app->m_log.printf(Log::LEVEL_WAR, __FILE__, __LINE__, "规格化统一资源定位符\"%s\"", strUrl.c_str());
 			continue;

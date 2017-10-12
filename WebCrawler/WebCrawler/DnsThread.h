@@ -8,8 +8,8 @@ class DnsThread : public Thread
 {
 private:
 
-	void *ThreadHandlerFunc(void);
-	static map<string, string> s_hosts;
+	void *ThreadHandlerFunc(void);			// 解析线程处理函数
+	static map<string, string> s_hosts;		// 主机域名-IP map表
 };
 
 

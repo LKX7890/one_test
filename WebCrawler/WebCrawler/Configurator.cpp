@@ -1,6 +1,7 @@
 #include "Configurator.h"
 #include "common.h"
 #include "StrKit.h"
+#include "Log.h"
 
 
 Configurator::Configurator(void) : m_log_level(Log::LEVEL_DBG), m_max_jobs(-1), m_max_depth(-1),
