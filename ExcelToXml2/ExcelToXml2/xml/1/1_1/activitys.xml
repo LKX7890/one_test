@@ -1,0 +1,182 @@
+<?version="1.0" encoding="utf-8"?>
+<type>
+    <ActivityTypes>
+        <cfg Type="1" Name="许愿星" Desc="消耗物品,获得物品"/>
+        <cfg Type="2" Name="兑换" Desc="点亮星星"/>
+    </ActivityTypes>
+</type>
+
+<list>
+    <ActivityLists>
+        <cfg Type="1" ConfigID="1" StartTime="2016-11-25 0:0:0" EndTime="2016-12-25 0:0:0" AppearTime="2016-11-25 0:0:0" DisAppearTime="2016-12-25 0:0:0" Desc="兑换活动一"/>
+        <cfg Type="1" ConfigID="2" StartTime="2016-12-25 0:0:0" EndTime="2017-12-25 0:0:0" AppearTime="2016-12-25 0:0:0" DisAppearTime="2017-12-25 0:0:0" Desc="兑换活动二"/>
+        <cfg Type="2" ConfigID="1" StartTime="2016-11-25 0:0:0" EndTime="2016-12-25 0:0:0" AppearTime="2016-11-25 0:0:0" DisAppearTime="2016-12-25 0:0:0" Desc="许愿星一"/>
+        <cfg Type="2" ConfigID="2" StartTime="2016-12-25 0:0:0" EndTime="2017-12-25 0:0:0" AppearTime="2016-12-25 0:0:0" DisAppearTime="2017-12-25 0:0:0" Desc="许愿星二"/>
+    </ActivityLists>
+</list>
+
+<exchange1>
+    <ExchangeList>
+        <cfg ID="1" ItemUse="188-10|189-10" ItemGet="189-100|184-100" TimesLimit="1"/>
+        <cfg ID="2" ItemUse="188-10|189-11" ItemGet="189-100|184-101" TimesLimit="2"/>
+        <cfg ID="3" ItemUse="188-10|189-12" ItemGet="189-100|184-102" TimesLimit="3"/>
+        <cfg ID="4" ItemUse="188-10|189-13" ItemGet="189-100|184-103" TimesLimit="4"/>
+        <cfg ID="5" ItemUse="188-10|189-14" ItemGet="189-100|184-104" TimesLimit="5"/>
+        <cfg ID="6" ItemUse="188-10|189-15" ItemGet="189-100|184-105" TimesLimit="6"/>
+        <cfg ID="7" ItemUse="188-10|189-16" ItemGet="189-100|184-106" TimesLimit="7"/>
+        <cfg ID="8" ItemUse="5280-110|5375-0|6012-0" ItemGet="5280-110|5375-0|6012-0" TimesLimit="8"/>
+        <cfg ID="9" ItemUse="5280-140|5373-0|6009-0" ItemGet="5280-140|5373-0|6009-0" TimesLimit="9"/>
+        <cfg ID="1" ItemUse="5280-150|5647-0|5648-0" ItemGet="5280-150|5647-0|5648-0" TimesLimit="1"/>
+        <cfg ID="11" ItemUse="5280-300|6224-0" ItemGet="5280-300|6224-0" TimesLimit="11"/>
+        <cfg ID="12" ItemUse="5280-350|816-0" ItemGet="5280-350|816-1" TimesLimit="12"/>
+        <cfg ID="13" ItemUse="5280-400|5374-0|6010-0" ItemGet="5280-400|5374-0|6010-0" TimesLimit="13"/>
+        <cfg ID="14" ItemUse="5280-420|3526-1" ItemGet="5280-420|3526-1" TimesLimit="14"/>
+    </ExchangeList>
+</exchange1>
+
+<exchange2>
+    <ExchangeList>
+        <cfg ID="1" ItemUse="188-10|189-10" ItemGet="189-100|184-100" TimesLimit="14"/>
+        <cfg ID="2" ItemUse="188-10|189-11" ItemGet="189-100|184-101" TimesLimit="14"/>
+        <cfg ID="3" ItemUse="188-10|189-12" ItemGet="189-100|184-102" TimesLimit="14"/>
+        <cfg ID="4" ItemUse="188-10|189-13" ItemGet="189-100|184-103" TimesLimit="14"/>
+        <cfg ID="5" ItemUse="188-10|189-14" ItemGet="189-100|184-104" TimesLimit="14"/>
+        <cfg ID="6" ItemUse="188-10|189-15" ItemGet="189-100|184-105" TimesLimit="14"/>
+        <cfg ID="7" ItemUse="188-10|189-16" ItemGet="189-100|184-106" TimesLimit="14"/>
+        <cfg ID="8" ItemUse="5280-110|5375-0|6012-0" ItemGet="5280-110|5375-0|6012-0" TimesLimit="14"/>
+        <cfg ID="9" ItemUse="5280-140|5373-0|6009-0" ItemGet="5280-140|5373-0|6009-0" TimesLimit="14"/>
+        <cfg ID="1" ItemUse="5280-150|5647-0|5648-0" ItemGet="5280-150|5647-0|5648-0" TimesLimit="14"/>
+        <cfg ID="11" ItemUse="5280-300|6224-0" ItemGet="5280-300|6224-0" TimesLimit="14"/>
+        <cfg ID="12" ItemUse="5280-350|816-0" ItemGet="5280-350|816-0" TimesLimit="14"/>
+        <cfg ID="13" ItemUse="5280-400|5374-0|6010-0" ItemGet="5280-400|5374-0|6010-0" TimesLimit="14"/>
+        <cfg ID="14" ItemUse="5280-420|3526-1" ItemGet="5280-420|3526-1" TimesLimit="14"/>
+    </ExchangeList>
+</exchange2>
+
+<wishstar1>
+    <WishStarList>
+        <cfg ID="1" itemUse="189-1|184-1"/>
+        <cfg ID="2" itemUse="189-1|184-2"/>
+        <cfg ID="3" itemUse="189-1|184-3"/>
+        <cfg ID="4" itemUse="189-1|184-4"/>
+        <cfg ID="5" itemUse="189-1|184-5"/>
+        <cfg ID="6" itemUse="189-1|184-6"/>
+        <cfg ID="7" itemUse="189-1|184-7"/>
+        <cfg ID="8" itemUse="189-1|184-8"/>
+        <cfg ID="9" itemUse="189-1|184-9"/>
+        <cfg ID="1" itemUse="189-1|184-10"/>
+        <cfg ID="11" itemUse="189-1|184-11"/>
+        <cfg ID="12" itemUse="189-1|184-12"/>
+        <cfg ID="13" itemUse="189-1|184-13"/>
+        <cfg ID="14" itemUse="189-1|184-14"/>
+        <cfg ID="15" itemUse="189-1|184-15"/>
+    </WishStarList>
+</wishstar1>
+
+<wishstar2>
+    <WishStarList>
+        <cfg ID="1" itemUse="188-1|189-1"/>
+        <cfg ID="2" itemUse="188-1|189-2"/>
+        <cfg ID="3" itemUse="188-1|189-3"/>
+        <cfg ID="4" itemUse="188-1|189-4"/>
+        <cfg ID="5" itemUse="188-1|189-5"/>
+        <cfg ID="6" itemUse="188-1|189-6"/>
+        <cfg ID="7" itemUse="188-1|189-7"/>
+        <cfg ID="8" itemUse="188-1|189-8"/>
+        <cfg ID="9" itemUse="188-1|189-9"/>
+        <cfg ID="1" itemUse="188-1|189-10"/>
+        <cfg ID="11" itemUse="188-1|189-11"/>
+        <cfg ID="12" itemUse="188-1|189-12"/>
+        <cfg ID="13" itemUse="188-1|189-13"/>
+        <cfg ID="14" itemUse="188-1|189-14"/>
+        <cfg ID="15" itemUse="188-1|189-15"/>
+    </WishStarList>
+</wishstar2>
+
+<wedding1>
+    <FrmInfo>
+        <cfg CommonFreeTime="2" VipFreeTime="3" CDTime="9" SpecialBuyWishTimes="5"/>
+    </FrmInfo>
+    <Chests>
+        <cfg ID="1" GroupID="1" GroupProb="3" ChestID="1" Item="257-1" OldPrice="188-990" NewPrice="188-693" Prob="2" Discount="7" Limit="0"/>
+        <cfg ID="2" GroupID="1" GroupProb="0" ChestID="1" Item="257-1" OldPrice="188-990" NewPrice="188-495" Prob="8" Discount="5" Limit="51"/>
+        <cfg ID="3" GroupID="1" GroupProb="0" ChestID="1" Item="257-1" OldPrice="188-990" NewPrice="188-396" Prob="1" Discount="4" Limit="11"/>
+        <cfg ID="4" GroupID="1" GroupProb="0" ChestID="2" Item="258-1" OldPrice="188-2580" NewPrice="188-1548" Prob="15" Discount="6" Limit="0"/>
+        <cfg ID="5" GroupID="1" GroupProb="0" ChestID="2" Item="258-1" OldPrice="188-2580" NewPrice="188-1290" Prob="8" Discount="5" Limit="51"/>
+        <cfg ID="6" GroupID="1" GroupProb="0" ChestID="2" Item="258-1" OldPrice="188-2580" NewPrice="188-1032" Prob="1" Discount="4" Limit="11"/>
+        <cfg ID="7" GroupID="1" GroupProb="0" ChestID="3" Item="259-1" OldPrice="188-13140" NewPrice="188-7884" Prob="15" Discount="6" Limit="0"/>
+        <cfg ID="8" GroupID="1" GroupProb="0" ChestID="3" Item="259-1" OldPrice="188-13140" NewPrice="188-5256" Prob="1" Discount="4" Limit="51"/>
+        <cfg ID="9" GroupID="1" GroupProb="0" ChestID="3" Item="259-1" OldPrice="188-13140" NewPrice="188-2628" Prob="4" Discount="2" Limit="11"/>
+        <cfg ID="1" GroupID="2" GroupProb="3" ChestID="4" Item="260-1" OldPrice="184-799000" NewPrice="184-639200" Prob="2" Discount="8" Limit="0"/>
+        <cfg ID="11" GroupID="2" GroupProb="0" ChestID="4" Item="260-1" OldPrice="184-799000" NewPrice="184-559300" Prob="8" Discount="7" Limit="99"/>
+        <cfg ID="12" GroupID="2" GroupProb="0" ChestID="4" Item="260-1" OldPrice="184-799000" NewPrice="184-399500" Prob="1" Discount="5" Limit="2"/>
+        <cfg ID="13" GroupID="2" GroupProb="0" ChestID="5" Item="261-1" OldPrice="188-1999" NewPrice="188-1199" Prob="15" Discount="6" Limit="0"/>
+        <cfg ID="14" GroupID="2" GroupProb="0" ChestID="5" Item="261-1" OldPrice="188-1999" NewPrice="188-999" Prob="8" Discount="5" Limit="51"/>
+        <cfg ID="15" GroupID="2" GroupProb="0" ChestID="5" Item="261-1" OldPrice="188-1999" NewPrice="188-799" Prob="1" Discount="4" Limit="11"/>
+        <cfg ID="16" GroupID="2" GroupProb="0" ChestID="6" Item="262-1" OldPrice="188-4599" NewPrice="188-2759" Prob="15" Discount="6" Limit="0"/>
+        <cfg ID="17" GroupID="2" GroupProb="0" ChestID="6" Item="262-1" OldPrice="188-4599" NewPrice="188-1839" Prob="1" Discount="4" Limit="51"/>
+        <cfg ID="18" GroupID="2" GroupProb="0" ChestID="6" Item="262-1" OldPrice="188-4599" NewPrice="188-920" Prob="4" Discount="2" Limit="11"/>
+        <cfg ID="19" GroupID="3" GroupProb="2" ChestID="7" Item="263-1" OldPrice="188-199" NewPrice="188-159" Prob="2" Discount="8" Limit="0"/>
+        <cfg ID="2" GroupID="3" GroupProb="0" ChestID="7" Item="263-1" OldPrice="188-199" NewPrice="188-139" Prob="8" Discount="7" Limit="2"/>
+        <cfg ID="21" GroupID="3" GroupProb="0" ChestID="7" Item="263-1" OldPrice="188-199" NewPrice="188-100" Prob="1" Discount="5" Limit="1"/>
+        <cfg ID="22" GroupID="3" GroupProb="0" ChestID="8" Item="264-1" OldPrice="188-520" NewPrice="188-312" Prob="15" Discount="6" Limit="0"/>
+        <cfg ID="23" GroupID="3" GroupProb="0" ChestID="8" Item="264-1" OldPrice="188-520" NewPrice="188-260" Prob="8" Discount="5" Limit="2"/>
+        <cfg ID="24" GroupID="3" GroupProb="0" ChestID="8" Item="264-1" OldPrice="188-520" NewPrice="188-208" Prob="1" Discount="4" Limit="1"/>
+        <cfg ID="25" GroupID="3" GroupProb="0" ChestID="9" Item="265-1" OldPrice="188-1314" NewPrice="188-788" Prob="15" Discount="6" Limit="0"/>
+        <cfg ID="26" GroupID="3" GroupProb="0" ChestID="9" Item="265-1" OldPrice="188-1314" NewPrice="188-526" Prob="1" Discount="4" Limit="51"/>
+        <cfg ID="27" GroupID="3" GroupProb="0" ChestID="9" Item="265-1" OldPrice="188-1314" NewPrice="188-263" Prob="4" Discount="2" Limit="11"/>
+        <cfg ID="28" GroupID="4" GroupProb="2" ChestID="1" Item="4176-1" OldPrice="188-666" NewPrice="188-400" Prob="2" Discount="6" Limit="0"/>
+        <cfg ID="29" GroupID="4" GroupProb="0" ChestID="1" Item="4176-1" OldPrice="188-666" NewPrice="188-333" Prob="8" Discount="5" Limit="51"/>
+        <cfg ID="3" GroupID="4" GroupProb="0" ChestID="1" Item="4176-1" OldPrice="188-666" NewPrice="188-266" Prob="1" Discount="4" Limit="11"/>
+        <cfg ID="31" GroupID="4" GroupProb="0" ChestID="11" Item="4172-1" OldPrice="188-1314" NewPrice="188-788" Prob="15" Discount="6" Limit="0"/>
+        <cfg ID="32" GroupID="4" GroupProb="0" ChestID="11" Item="4172-1" OldPrice="188-1314" NewPrice="188-657" Prob="8" Discount="5" Limit="51"/>
+        <cfg ID="33" GroupID="4" GroupProb="0" ChestID="11" Item="4172-1" OldPrice="188-1314" NewPrice="188-394" Prob="4" Discount="3" Limit="11"/>
+        <cfg ID="34" GroupID="4" GroupProb="0" ChestID="12" Item="4171-1" OldPrice="188-520" NewPrice="188-364" Prob="15" Discount="7" Limit="0"/>
+        <cfg ID="35" GroupID="4" GroupProb="0" ChestID="12" Item="4171-1" OldPrice="188-520" NewPrice="188-312" Prob="1" Discount="6" Limit="51"/>
+        <cfg ID="36" GroupID="4" GroupProb="0" ChestID="12" Item="4171-1" OldPrice="188-520" NewPrice="188-260" Prob="1" Discount="5" Limit="11"/>
+        <cfg ID="37" GroupID="5" GroupProb="2" ChestID="13" Item="4175-1" OldPrice="188-1666" NewPrice="188-1000" Prob="8" Discount="6" Limit="0"/>
+        <cfg ID="38" GroupID="5" GroupProb="0" ChestID="13" Item="4175-1" OldPrice="188-1666" NewPrice="188-833" Prob="4" Discount="5" Limit="51"/>
+        <cfg ID="39" GroupID="5" GroupProb="0" ChestID="13" Item="4175-1" OldPrice="188-1666" NewPrice="188-500" Prob="2" Discount="3" Limit="11"/>
+        <cfg ID="4" GroupID="5" GroupProb="0" ChestID="14" Item="4169-1" OldPrice="188-780" NewPrice="188-546" Prob="1" Discount="7" Limit="0"/>
+        <cfg ID="41" GroupID="5" GroupProb="0" ChestID="14" Item="4169-1" OldPrice="188-780" NewPrice="188-648" Prob="8" Discount="6" Limit="51"/>
+        <cfg ID="42" GroupID="5" GroupProb="0" ChestID="14" Item="4169-1" OldPrice="188-780" NewPrice="188-390" Prob="4" Discount="5" Limit="11"/>
+        <cfg ID="43" GroupID="5" GroupProb="0" ChestID="15" Item="2931-1" OldPrice="188-100" NewPrice="188-70" Prob="1" Discount="7" Limit="0"/>
+        <cfg ID="44" GroupID="5" GroupProb="0" ChestID="15" Item="2931-1" OldPrice="188-100" NewPrice="188-60" Prob="7" Discount="6" Limit="51"/>
+        <cfg ID="45" GroupID="5" GroupProb="0" ChestID="15" Item="2931-1" OldPrice="188-100" NewPrice="188-50" Prob="4" Discount="5" Limit="11"/>
+        <cfg ID="46" GroupID="5" GroupProb="0" ChestID="16" Item="2930-1" OldPrice="188-780" NewPrice="188-546" Prob="1" Discount="7" Limit="0"/>
+        <cfg ID="47" GroupID="5" GroupProb="0" ChestID="16" Item="2930-1" OldPrice="188-780" NewPrice="188-648" Prob="8" Discount="6" Limit="51"/>
+        <cfg ID="48" GroupID="5" GroupProb="0" ChestID="16" Item="2930-1" OldPrice="188-780" NewPrice="188-390" Prob="4" Discount="5" Limit="11"/>
+        <cfg ID="49" GroupID="5" GroupProb="0" ChestID="17" Item="2929-1" OldPrice="188-390" NewPrice="188-273" Prob="1" Discount="7" Limit="0"/>
+        <cfg ID="5" GroupID="5" GroupProb="0" ChestID="17" Item="2929-1" OldPrice="188-390" NewPrice="188-234" Prob="8" Discount="6" Limit="51"/>
+        <cfg ID="51" GroupID="5" GroupProb="0" ChestID="17" Item="2929-1" OldPrice="188-390" NewPrice="188-195" Prob="3" Discount="5" Limit="11"/>
+    </Chests>
+    <RefreshPrizes>
+        <cfg ID="1" RefreshTimes="5" PrizeList="184-1000|5285-1"/>
+        <cfg ID="2" RefreshTimes="1" PrizeList="337-1|189-25"/>
+        <cfg ID="3" RefreshTimes="15" PrizeList="201-5|4484-2"/>
+        <cfg ID="4" RefreshTimes="2" PrizeList="5285-5|4484-2"/>
+        <cfg ID="5" RefreshTimes="25" PrizeList="5285-5|4484-10"/>
+    </RefreshPrizes>
+    <WishPrizes>
+        <cfg ID="1" Times="1" PrizeList="4854-259200|1360-259200"/>
+        <cfg ID="2" Times="2" PrizeList="5285-1"/>
+        <cfg ID="3" Times="3" PrizeList="5285-2"/>
+        <cfg ID="4" Times="4" PrizeList="5285-2"/>
+    </WishPrizes>
+    <Specials>
+        <cfg ID="1" Item="260-1" OldPrice="184-799000" NewPrice="184-239700" Limit="5"/>
+        <cfg ID="2" Item="4172-1" OldPrice="188-1314" NewPrice="188-460" Limit="5"/>
+        <cfg ID="3" Item="2931-1" OldPrice="188-100" NewPrice="188-50" Limit="3"/>
+        <cfg ID="4" Item="2929-1" OldPrice="188-390" NewPrice="188-100" Limit="4"/>
+        <cfg ID="5" Item="4176-1" OldPrice="188-666" NewPrice="188-266" Limit="0"/>
+        <cfg ID="6" Item="273-0|904-0" OldPrice="188-1314" NewPrice="188-527" Limit="0"/>
+    </Specials>
+    <ExchangeItem>
+        <cfg ID="1" TypeName="粉若雨梦 神翼" ItemsToGet="1555-0" ItemToUse="257-1|262-1|265-1" IfBroadNoti="1"/>
+        <cfg ID="2" TypeName="兔子冰淇淋" ItemsToGet="1773-0|1776-0" ItemToUse="4169-1|265-1" IfBroadNoti="1"/>
+        <cfg ID="3" TypeName="圣诞小仙女" ItemsToGet="4802-0" ItemToUse="4175-1|2929-1|264-1" IfBroadNoti="0"/>
+        <cfg ID="4" TypeName="炫彩蝴蝶梦 彩蛋" ItemsToGet="343-10" ItemToUse="4176-1|2930-1" IfBroadNoti="0"/>
+        <cfg ID="5" TypeName="虹恋心语" ItemsToGet="4456-1|4460-1" ItemToUse="259-1|262-1|263-1" IfBroadNoti="1"/>
+        <cfg ID="6" TypeName="至尊呐喊" ItemsToGet="209-10" ItemToUse="4171-1" IfBroadNoti="1"/>
+    </ExchangeItem>
+</wedding1>
