@@ -8,8 +8,8 @@ public:
 	MultiIo(void);
 	~MultiIo(void);
 
-	bool add(int fd, epoll_event &event) const;
-	bool del(int fd, epoll_event &event) const;
+	bool AddSockfdToEpoll(int fd, epoll_event &event) const;
+	bool DelSockfdFromEpoll(int fd, epoll_event &event) const;
 	int wait(epoll_event events[], int max, int timeout) const;
 
 private:

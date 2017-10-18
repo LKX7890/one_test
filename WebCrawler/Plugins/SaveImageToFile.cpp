@@ -45,7 +45,7 @@ bool SaveImageToFile::Handler(void *arg)
 			g_app->m_log.printf(Log::LEVEL_DBG, __FILE__, __LINE__, "抽取到一个深度%d的统一资源定位符\"%s\"",
 				res->m_dnsUrl.m_depth, strUrl.c_str());
 
-			if (!RawUrl::normalized(strUrl))
+			if (!RawUrl::FormattingRawUrl(strUrl))
 			{
 				g_app->m_log.printf(Log::LEVEL_WAR, __FILE__, __LINE__, "规格化统一资源定位符\"%s\"失败", strUrl.c_str());
 				continue;

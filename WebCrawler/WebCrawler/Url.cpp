@@ -7,7 +7,7 @@ RawUrl::RawUrl(string const *strUrl, ETYPE type /*= ETYPE_HTML*/, int depth /*= 
 
 }
 
-bool RawUrl::normalized(string &strUrl)
+bool RawUrl::FormattingRawUrl(string &strUrl)
 {
 	string strTmp = strUrl;
 	StrKit::StrTrim(strTmp);

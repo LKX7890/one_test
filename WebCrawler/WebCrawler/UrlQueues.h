@@ -34,12 +34,12 @@ private:
 	static bool isBinary(string const &strUrl);
 
 	UrlFilter &m_fileter;
-	list<RawUrl>m_rawUrlQueue;
+	list<RawUrl>m_rawUrlQueue;										// 原始URL列表
 	mutable pthread_mutex_t m_rawUrlMutex;
 	pthread_cond_t m_rawUrlNoFull;
 	pthread_cond_t m_rawUrlNoEmpty;
 
-	list<DnsUrl> m_dnsUrlQueue;
+	list<DnsUrl> m_dnsUrlQueue;										// 解析URL列表
 	mutable pthread_mutex_t m_dnsUrlMutex;
 	pthread_cond_t m_dnsUrlNoFull;
 	pthread_cond_t m_dnsUrlNoEmpty;

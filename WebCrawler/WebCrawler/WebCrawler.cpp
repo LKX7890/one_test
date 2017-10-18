@@ -1,4 +1,7 @@
 #include "WebCrawler.h"
+#include "StrKit.h"
+#include "Socket.h"
+#include "Url.h"
 
 
 
@@ -17,11 +20,12 @@ WebCrawler::~WebCrawler()
 
 void WebCrawler::Init(bool daemon /*= false*/)
 {
+	// 读配置
 	m_cfg.LoadCfgFile("WebCrawler.cfg");
 
 	if (daemon)
 	{
-		InitDaemon();
+		this->InitDaemon();
 	}
 
 	m_pluginMngr.LoadPlugins();
@@ -31,11 +35,11 @@ void WebCrawler::Init(bool daemon /*= false*/)
 		m_log.printf(Log::LEVEL_ERR, __FILE__, __LINE__, "chdir: %s", strerror(errno));
 	}
 
-	InitMaxFiles(1024);
-	InitSeeds();
-	InitDns();
-	InitTicker();
-	InitSend();
+	this->InitMaxFiles(1024);
+	this->InitSeeds();
+	this->RunDns();
+	this->InitTicker();
+	this->RunSend();
 }
 
 void WebCrawler::ExecMultiIO()
@@ -76,13 +80,13 @@ void WebCrawler::ExecMultiIO()
 			if (events[i].events & EPOOLLERR || events[i].events &EPOLLHUP || !(events[i].events & EPOLLIN))
 			{
 				m_log.printf(Log::LEVEL_WAR, __FILE__, __LINE__, "套接字异常");
-				m_multiIO.del(socket->m_sockfd(), events[i]);
+				m_multiIO.DelSockfdFromEpoll(socket->m_sockfd(), events[i]);
 
 				delete socket;
 				continue;
 			}
 
-			m_multiIO.del(socket->sockfd(), events[i]);
+			m_multiIO.DelSockfdFromEpoll(socket->sockfd(), events[i]);
 			m_log.printf(Log::LEVEL_DBG, __FILE__, __LINE__, socket->sockfd());
 
 			(new RecvThread(socket))->ThreadStart();
@@ -214,21 +218,22 @@ void WebCrawler::InitSeeds(void)
 {
 	if (m_cfg.m_seeds.empty())
 	{
-		m_log.printf(Log::LEVEL_ERR, __FILE__, __LINE__, "没种子")；
+		m_log.printf(Log::LEVEL_ERR, __FILE__, __LINE__, "没种子");
 	}
 
 	vector<string> seeds = StrKit::StrSplit(m_cfg.m_seeds, ",", 0);
 
 	for (vector<string>::iterator it = seeds.begin(); it != seeds.end(); ++it)
 	{
-		if (RawUrl::normalized(*it))
+		string rawurl_string = *it;
+		if (RawUrl::FormattingRawUrl(rawurl_string))
 		{
-			m_urlQueues.pushRawUrl(RawUrl(*it));
+			m_urlQueues.pushRawUrl(RawUrl(&rawurl_string));
 		}
 	}
 }
 
-void WebCrawler::InitDns(void)
+void WebCrawler::RunDns(void)
 {
 	m_dnsThread.ThreadStart();
 }
@@ -255,7 +260,7 @@ void WebCrawler::InitTicker(void) const
 	}
 }
 
-void WebCrawler::InitSend(void)
+void WebCrawler::RunSend(void)
 {
 	m_sendThread.ThreadStart();
 }

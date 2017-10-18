@@ -6,7 +6,7 @@ class Thread
 public:
 
 	virtual ~Thread(void){}
-	void ThreadStart(void);
+	void ThreadStart(void);		// 
 
 private:
 
