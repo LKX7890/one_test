@@ -88,6 +88,7 @@ int32_t ExcelToXml(const char *excelFilePath, const char *xmlFilePath)
 
 int32_t BookToXmlDoc(libxl::Book* book, tinyxml2::XMLDocument *xmlDoc)
 {
+	// 写入表格声明
 	tinyxml2::XMLDeclaration *declaration = xmlDoc->NewDeclaration("version=\"1.0\" encoding=\"utf-8\"");
 	xmlDoc->LinkEndChild(declaration);
 
@@ -95,6 +96,7 @@ int32_t BookToXmlDoc(libxl::Book* book, tinyxml2::XMLDocument *xmlDoc)
 	{
 		if (!IsConfigSheet(book->getSheet(i)->name())){ continue; }
 
+		// 写入子节点
 		tinyxml2::XMLElement *ele = xmlDoc->NewElement(book->getSheet(i)->name() + 1);
 		xmlDoc->LinkEndChild(ele);
 
@@ -152,7 +154,7 @@ int32_t SheetToXmlEle(libxl::Sheet *sheet, tinyxml2::XMLDocument *xmlDoc, tinyxm
 					titles.push_back(text);
 				}
 			} while (0);
-			ele->LinkEndChild(group);
+			ele->LinkEndChild(group); // 写入标题第一行的内容
 		}
 		// 第一个为空,第二个不为空,表示是数据列
 		else if (IsCellEmpty(firstCellType) && !IsCellEmpty(secondCellType))
