@@ -67,17 +67,20 @@ int32_t ExcelToXml(const char *excelFilePath, const char *xmlFilePath)
 		return enmErrorDef_CreateBookFailed;
 	}
 
+	// 导入xls文件
 	if (!book->load(excelFilePath))
 	{
 		return enmErrorDef_LoadExcelFileFailed;
 	}
 
 	tinyxml2::XMLDocument xmlDoc;
-	int32_t ret = BookToXmlDoc(book, &xmlDoc);
+	int32_t ret = BookToXmlDoc(book, &xmlDoc);	// xls文件转换为xmlDoc文件
 	if (ret != enmErrorDef_OK)
 	{
 		return ret;
 	}
+
+	// 根据路径名字创建保存文件
 	if (xmlDoc.SaveFile(xmlFilePath) != tinyxml2::XML_SUCCESS)
 	{
 		return enmErrorDef_SaveXmlFileFailed;
@@ -92,14 +95,16 @@ int32_t BookToXmlDoc(libxl::Book* book, tinyxml2::XMLDocument *xmlDoc)
 	tinyxml2::XMLDeclaration *declaration = xmlDoc->NewDeclaration("version=\"1.0\" encoding=\"utf-8\"");
 	xmlDoc->LinkEndChild(declaration);
 
+	// 循环表格
 	for (int32_t i = 0; i < book->sheetCount(); ++i)
 	{
 		if (!IsConfigSheet(book->getSheet(i)->name())){ continue; }
 
-		// 写入子节点
+		// 获取表格名称
 		tinyxml2::XMLElement *ele = xmlDoc->NewElement(book->getSheet(i)->name() + 1);
 		xmlDoc->LinkEndChild(ele);
 
+		// 表格转成xml文件
 		// printf("%s\n", book->getSheet(i)->name());
 		int32_t ret = SheetToXmlEle(book->getSheet(i), xmlDoc, ele);
 		if (ret != enmErrorDef_OK)
@@ -112,7 +117,8 @@ int32_t BookToXmlDoc(libxl::Book* book, tinyxml2::XMLDocument *xmlDoc)
 
 int32_t SheetToXmlEle(libxl::Sheet *sheet, tinyxml2::XMLDocument *xmlDoc, tinyxml2::XMLElement *ele)
 {
-	tinyxml2::XMLElement *group = NULL;
+	tinyxml2::XMLElement *group = NULL;		// ???
+
 	static std::vector<std::string> titles;
 	titles.clear();
 	for (int32_t row = 0; row < sheet->lastRow(); ++row)
@@ -120,6 +126,7 @@ int32_t SheetToXmlEle(libxl::Sheet *sheet, tinyxml2::XMLDocument *xmlDoc, tinyxm
 		// 获取该行前两个单元格
 		int32_t firstCellType = sheet->cellType(row, 0);
 		int32_t secondCellType = sheet->cellType(row, 1);
+
 		// 如果都是空白,表明是空白行
 		if (IsCellEmpty(firstCellType) && IsCellEmpty(secondCellType))
 		{
@@ -143,6 +150,8 @@ int32_t SheetToXmlEle(libxl::Sheet *sheet, tinyxml2::XMLDocument *xmlDoc, tinyxm
 					group = xmlDoc->NewElement(formatErrorMsg_GroupNameNull);
 					break;
 				}
+
+				// 产生一个写入的节点
 				group = xmlDoc->NewElement(firstCell);
 				for (int32_t col = 1; col <= sheet->lastCol(); ++col)
 				{
@@ -154,13 +163,15 @@ int32_t SheetToXmlEle(libxl::Sheet *sheet, tinyxml2::XMLDocument *xmlDoc, tinyxm
 					titles.push_back(text);
 				}
 			} while (0);
-			ele->LinkEndChild(group); // 写入标题第一行的内容
+			ele->LinkEndChild(group); // 写入节点标签
 		}
 		// 第一个为空,第二个不为空,表示是数据列
 		else if (IsCellEmpty(firstCellType) && !IsCellEmpty(secondCellType))
 		{
 			tinyxml2::XMLElement *cfg = xmlDoc->NewElement("cfg");
-			group->LinkEndChild(cfg);
+			group->LinkEndChild(cfg);	// 写入节点标签
+
+			// 根据标题栏单元格长度读
 			for (uint32_t col = 0; col < titles.size(); ++col)
 			{
 				const char *text = ReadCellContent(sheet, row, col + 1);
@@ -168,6 +179,8 @@ int32_t SheetToXmlEle(libxl::Sheet *sheet, tinyxml2::XMLDocument *xmlDoc, tinyxm
 				{
 					text = formatErrorMsg_CellValueNull;
 				}
+
+				// 单元格的值被指定节点属性值
 				cfg->SetAttribute(titles[col].c_str(), text);
 			}
 		}
@@ -175,6 +188,7 @@ int32_t SheetToXmlEle(libxl::Sheet *sheet, tinyxml2::XMLDocument *xmlDoc, tinyxm
 	return enmErrorDef_OK;
 }
 
+// 扩展名
 void GetPathExtensionName(const char *filePath, char ext[], const uint32_t extLen)
 {
 	int32_t len = strlen(filePath), lastSep = 0, m = 0;
@@ -272,10 +286,10 @@ const char* ReadCellContent(libxl::Sheet *sheet, const int32_t row, const int32_
 
 void GBKToUTF8(const char* asciiBuf, WCHAR wcharTmp[], char utf8Buf[], const int32_t utf8BufLen)
 {
-	int32_t len = MultiByteToWideChar(CP_ACP, 0, asciiBuf, -1, NULL, 0);
-	MultiByteToWideChar(CP_ACP, 0, asciiBuf, -1, wcharTmp, len);
-	len = WideCharToMultiByte(CP_UTF8, 0, wcharTmp, -1, NULL, 0, NULL, NULL);
-	WideCharToMultiByte(CP_UTF8, 0, wcharTmp, -1, utf8Buf, len, NULL, NULL);
+	int32_t len = MultiByteToWideChar(CP_ACP, 0, asciiBuf, -1, NULL, 0); // 转换多字节字符串到unicode字符串所需字符个数
+	MultiByteToWideChar(CP_ACP, 0, asciiBuf, -1, wcharTmp, len);		 // 转换
+	len = WideCharToMultiByte(CP_UTF8, 0, wcharTmp, -1, NULL, 0, NULL, NULL); // unicode字符串转换多字节字符串所需字符个数
+	WideCharToMultiByte(CP_UTF8, 0, wcharTmp, -1, utf8Buf, len, NULL, NULL);  // 转换
 }
 
 void GetFilesFromDirectory(std::vector<std::string> &files, const std::string &directoryPath)
@@ -284,10 +298,10 @@ void GetFilesFromDirectory(std::vector<std::string> &files, const std::string &d
 	long hFile = 0;
 	char tmpPath[MAX_PATH] = { 0 };
 
-	// 设置查找所有文件
+	// 设置查找目录下所有文件字符串
 	sprintf_s(tmpPath, "%s\\*", directoryPath.c_str());
 
-	// 查找成功返回句柄， 信息保存在fileinfo中
+	// 查找文件夹目录下所有文件，查找成功返回句柄， 信息保存在fileinfo中
 	if ((hFile = _findfirst(tmpPath, &fileinfo)) == -1){ return; }  
 	do
 	{
@@ -306,7 +320,7 @@ void GetFilesFromDirectory(std::vector<std::string> &files, const std::string &d
 			sprintf_s(tmpPath, "%s\\%s", directoryPath.c_str(), fileinfo.name);
 			files.push_back(tmpPath);
 		}
-	} while (_findnext(hFile, &fileinfo) == 0);	// 搜索文件路径匹配的下一个实例
+	} while (_findnext(hFile, &fileinfo) == 0);	// 查找下一个文件
 	_findclose(hFile);
 }
 
@@ -314,13 +328,16 @@ int32_t ExcelToXmls(const char *excelFileDirectory, const char *xmlFileDirectory
 {
 	char xmlFilePath[MAX_PATH];
 	std::vector<std::string> files;
-	GetFilesFromDirectory(files, excelFileDirectory);
-	for (uint32_t i = 0; i < files.size(); ++i)
+	GetFilesFromDirectory(files, excelFileDirectory);	// 查找某文件目录下的文件，文件路径压入files内
+
+	for (uint32_t i = 0; i < files.size(); ++i)	// 目录下逐个文件转换
 	{
+		// 获取文件路径和名字
 		printf("%s\n", files[i].c_str());
 		int32_t ret = CalculateXmlFilePath(excelFileDirectory, xmlFileDirectory, files[i].c_str(), xmlFilePath, MAX_PATH);
 		if (ret != enmErrorDef_OK){ return ret; }
 
+		// 创建xml文件目录
 		ret = CreateDirectory(xmlFilePath);
 		if (ret != enmErrorDef_OK){ return ret; }
 
@@ -330,19 +347,21 @@ int32_t ExcelToXmls(const char *excelFileDirectory, const char *xmlFileDirectory
 	return enmErrorDef_OK;
 }
 
+// 设置xml文件路径和名
 int32_t CalculateXmlFilePath(const char *excelFileDirectory, const char *xmlFileDirectory, const char *excelFilePath, char xmlFilePath[], const int32_t xmlFilePathMaxLen)
 {
 	int32_t excelFileDirectoryLen = strlen(excelFileDirectory);
 	int32_t excelFilePathLen = strlen(excelFilePath);
 
-	if (excelFileDirectoryLen > excelFilePathLen){ return enmErrorDef_CalculateXmlFilePathError; }
+	if (excelFileDirectoryLen > excelFilePathLen){ return enmErrorDef_CalculateXmlFilePathError; }	// 文件不在目录下
 
-	// 计算xml文件夹路径+excel路径+长度
+	// 设置xml文件路径格式
 	sprintf_s(xmlFilePath, xmlFilePathMaxLen, "%s%s", xmlFileDirectory, excelFilePath + excelFileDirectoryLen);
 	int32_t xmlFilePathLen = strlen(xmlFilePath);
 	for (int32_t i = xmlFilePathLen - 1; i >= 0; --i)
 	{
-		if (xmlFilePath[i] == '.')
+		// 根据xls名字产生xml文件名字
+		if (xmlFilePath[i] == '.')	
 		{
 			xmlFilePath[i + 1] = 'x';
 			xmlFilePath[i + 2] = 'm';
