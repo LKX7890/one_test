@@ -15,8 +15,18 @@ ExcelConverToXml::~ExcelConverToXml()
 
 void ExcelConverToXml::Start(const char *excelpath, char *xmlpath)
 {
-	char *xmlFilePath = NULL;
-	int32_t ret = CalculateXmlFilePath(excelpath, xmlFilePath, MAX_PATH);
+	char xmlFilePath[] = { 0 };
+	char excelpath_arr[] = { 0 };
+
+	size_t excelpathlen = strlen(excelpath);
+
+	for (int i = 0; i < excelpathlen; ++i)
+	{
+		excelpath_arr[i] = *(excelpath++);
+	}
+	excelpath_arr[excelpathlen] = '\0';
+
+	int32_t ret = CalculateXmlFilePath(excelpath_arr, xmlFilePath, MAX_PATH);
 	if (ret != enmErrorDef_OK){ return; }
 
 	// 创建xml文件目录
@@ -33,7 +43,7 @@ int ExcelConverToXml::ExcelToXml(const char *excelFilePath, const char *xmlFileP
 {
 	libxl::Book* book = NULL;
 	char ext[enmFileExtensionLength] = { 0 };
-	GetPathExtensionName(excelFilePath, ext, enmFileExtensionLength);
+	this->GetPathExtensionName(excelFilePath, ext, enmFileExtensionLength);
 	if (strcmp(ext, ".xls") == 0)
 	{
 		book = xlCreateBook();
@@ -311,10 +321,10 @@ int ExcelConverToXml::ExcelToXmls(const char *excelFileDirectory, const char *xm
 }
 
 // 设置xml文件路径和名
-int ExcelConverToXml::CalculateXmlFilePath(const char *excelFilePath, char xmlFilePath[], const int32_t xmlFilePathMaxLen)
+int ExcelConverToXml::CalculateXmlFilePath(char excelFilePath[], char xmlFilePath[], const int32_t xmlFilePathMaxLen)
 {
 	// 设置xml文件路径格式
-	sprintf_s(xmlFilePath, xmlFilePathMaxLen, "%s%s", excelFilePath);
+	sprintf_s(xmlFilePath, xmlFilePathMaxLen, "%s", excelFilePath);
 	int32_t xmlFilePathLen = strlen(xmlFilePath);
 	for (int32_t i = xmlFilePathLen - 1; i >= 0; --i)
 	{
@@ -334,6 +344,7 @@ int ExcelConverToXml::CalculateXmlFilePath(const char *excelFilePath, char xmlFi
 int ExcelConverToXml::CreateDirectory(const char *directoryPath)
 {
 	int32_t dirPathLen = strlen(directoryPath);
+
 	if (dirPathLen > MAX_PATH)
 	{
 		return enmErrorDef_MakeXmlFilePathError;
@@ -342,7 +353,7 @@ int ExcelConverToXml::CreateDirectory(const char *directoryPath)
 	char tmpDirPath[MAX_PATH] = { 0 };
 	for (int32_t i = 0; i < dirPathLen; ++i)
 	{
-		tmpDirPath[i] = directoryPath[i];
+		tmpDirPath[i] = *(directoryPath++);
 		if (tmpDirPath[i] == '\\' || tmpDirPath[i] == '/')
 		{
 			// 判断文件权限
@@ -363,9 +374,15 @@ int ExcelConverToXml::CreateDirectory(const char *directoryPath)
 void ExcelConverToXml::GetPathExtensionName(const char *filePath, char ext[], const uint32_t extLen)
 {
 	int32_t len = strlen(filePath), lastSep = 0, m = 0;
+	char filepath_arr[] = { 0 };
+	for (int i = 0; i < len; ++i)
+	{
+		filepath_arr[i] = *(filePath++);
+	}
+
 	for (lastSep = len - 1; lastSep >= 0; --lastSep)
 	{
-		if (filePath[lastSep] == '.' || filePath[lastSep] == '\\' || filePath[lastSep] == '/')
+		if (filepath_arr[lastSep] == '.' || filepath_arr[lastSep] == '\\' || filepath_arr[lastSep] == '/')
 		{
 			break;
 		}
@@ -376,7 +393,7 @@ void ExcelConverToXml::GetPathExtensionName(const char *filePath, char ext[], co
 	}
 	for (; lastSep < len; ++lastSep)
 	{
-		ext[m++] = filePath[lastSep];
+		ext[m++] = filepath_arr[lastSep];
 	}
 	ext[m] = '\0';
 }

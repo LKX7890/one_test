@@ -149,9 +149,13 @@ BOOL CExcelToXmlMFCDlg::OnInitDialog()
 	// todo lkx
 	//初始化树形控件
 	HTREEITEM tree_Root;
-	tree_Root = m_mytree.InsertItem("我的电脑");//控件中插入根节点
-	this->GetLogicalDrives(tree_Root);                    //自定义函数 获取驱动  
-	GetDriveDir(tree_Root);                         //自定义函数 获取驱动子项
+
+	//控件中插入根节点
+	tree_Root = m_mytree.InsertItem("我的电脑");
+
+	//自定义函数 获取驱动驱动子项
+	this->GetLogicalDrives(tree_Root);                      
+	GetDriveDir(tree_Root);                         
 	ShowFile("", tree_Root);//以E:\\test为根目录进行遍历
 
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
@@ -209,7 +213,7 @@ void CExcelToXmlMFCDlg::OnBnClickedConver()
 	char *xmlpath = NULL;
 	ExcelConverToXml exceltoxml;
 	exceltoxml.Start(m_excelpath, xmlpath);
-	m_xmlpath = xmlpath;
-	m_showpath.GetWindowText(m_xmlpath);
+	//m_xmlpath = xmlpath;
+	//m_showpath.GetWindowText(m_xmlpath);
 	//UpdateData(false);
 }

@@ -42,7 +42,7 @@ public:
 	const char* ReadCellContent(libxl::Sheet *sheet, const int row, const int col);
 	void GBKToUTF8(const char* asciiBuf, WCHAR wcharTmp[], char utf8Buf[], const int utf8BufLen);
 	void GetFilesFromDirectory(std::vector<std::string> &files, const std::string &directoryPath);
-	int CalculateXmlFilePath(const char *excelFilePath, char xmlFilePath[], const int xmlFilePathMaxLen);
+	int CalculateXmlFilePath(char excelFilePath[], char xmlFilePath[], const int xmlFilePathMaxLen);
 	int CreateDirectory(const char *directoryPath);
 	void GetPathExtensionName(const char *filePath, char ext[], const uint32_t extLen);
 };

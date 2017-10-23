@@ -95,22 +95,39 @@ int32_t BookToXmlDoc(libxl::Book* book, tinyxml2::XMLDocument *xmlDoc)
 	tinyxml2::XMLDeclaration *declaration = xmlDoc->NewDeclaration("version=\"1.0\" encoding=\"utf-8\"");
 	xmlDoc->LinkEndChild(declaration);
 
+	tinyxml2::XMLElement *config = xmlDoc->NewElement("config");
+	xmlDoc->InsertEndChild(config);
+
+	tinyxml2::XMLElement* root = xmlDoc->RootElement();
+
+	//tinyxml2::XMLElement* userNode = xmlDoc->NewElement("User");
+	//userNode->SetAttribute("Name", "hangzou");
+	//userNode->SetAttribute("Password ", "12345");
+	//root->InsertEndChild(userNode);
+
 	// 循环表格
 	for (int32_t i = 0; i < book->sheetCount(); ++i)
 	{
-		if (!IsConfigSheet(book->getSheet(i)->name())){ continue; }
+		// 根据第一个表第三列开始，创建根节点标签
+		const char *sheet_root = ReadCellContent(book->getSheet(i), 1, 2);
 
-		// 获取表格名称
-		tinyxml2::XMLElement *ele = xmlDoc->NewElement(book->getSheet(i)->name() + 1);
-		xmlDoc->LinkEndChild(ele);
 
-		// 表格转成xml文件
-		// printf("%s\n", book->getSheet(i)->name());
-		int32_t ret = SheetToXmlEle(book->getSheet(i), xmlDoc, ele);
-		if (ret != enmErrorDef_OK)
-		{
-			return ret;
-		}
+
+
+
+	//	if (!IsConfigSheet(book->getSheet(i)->name())){ continue; }
+
+	//	// 获取表格名称
+	//	tinyxml2::XMLElement *ele = xmlDoc->NewElement(book->getSheet(i)->name() + 1);
+	//	xmlDoc->LinkEndChild(ele);
+
+	//	// 表格转成xml文件
+	//	// printf("%s\n", book->getSheet(i)->name());
+	//	int32_t ret = SheetToXmlEle(book->getSheet(i), xmlDoc, ele);
+	//	if (ret != enmErrorDef_OK)
+	//	{
+	//		return ret;
+	//	}
 	}
 	return enmErrorDef_OK;
 }
@@ -121,7 +138,7 @@ int32_t SheetToXmlEle(libxl::Sheet *sheet, tinyxml2::XMLDocument *xmlDoc, tinyxm
 
 	static std::vector<std::string> titles;
 	titles.clear();
-	for (int32_t row = 0; row < sheet->lastRow(); ++row)
+	for (int32_t row = 8; row < sheet->lastRow(); ++row)
 	{
 		// 获取该行前两个单元格
 		int32_t firstCellType = sheet->cellType(row, 0);
@@ -138,12 +155,13 @@ int32_t SheetToXmlEle(libxl::Sheet *sheet, tinyxml2::XMLDocument *xmlDoc, tinyxm
 		{
 			do 
 			{
-				// 标题列不为空,表明没有分隔,有问题
-				if (!titles.empty())
-				{
-					group = xmlDoc->NewElement(formatErrorMsg_NoSeparateRows);
-					break;
-				}
+				// 标题列不为空,表明前一行和后一行没有分隔,有问题
+				//if (!titles.empty())
+				//{
+				//	group = xmlDoc->NewElement(formatErrorMsg_NoSeparateRows);
+				//	break;
+				//}
+
 				const char *firstCell = ReadCellContent(sheet, row, 0);
 				if (NULL == firstCell)
 				{
@@ -153,7 +171,7 @@ int32_t SheetToXmlEle(libxl::Sheet *sheet, tinyxml2::XMLDocument *xmlDoc, tinyxm
 
 				// 产生一个写入的节点
 				group = xmlDoc->NewElement(firstCell);
-				for (int32_t col = 1; col <= sheet->lastCol(); ++col)
+				for (int32_t col = 0; col <= sheet->lastCol(); ++col)
 				{
 					const char *text = ReadCellContent(sheet, row, col);
 					if (text == NULL || _stricmp(text, "EOF") == 0)
@@ -377,7 +395,7 @@ int32_t main()
 {
 	for (int32_t i = 0; i < 1; ++i)
 	{
-		ExcelToXmls("excel", "xml");
+		ExcelToXmls("F:\\lkx01\\one_test\\ExcelToXml2\\Debug", "xml");
 	}
 	system("pause");
 	return 0;
