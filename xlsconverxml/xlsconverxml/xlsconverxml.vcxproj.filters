@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{5ceafe9a-a282-4525-a2af-5b28194992be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{68a98689-eec1-47a7-a4a5-a9f7dc853f80}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include">
+      <UniqueIdentifier>{dab99175-79da-4c63-8b39-578f11640b15}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="xlsconverxml.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="include\setup.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\enum.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\IBookT.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\IFontT.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\IFormatT.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ISheetT.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\libxl.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tinyxml2.h">
+      <Filter>include</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="xlsconverxml.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="include\tinyxml2.cpp">
+      <Filter>include</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
