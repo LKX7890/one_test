@@ -5,7 +5,7 @@
 
 int main()
 {
-	string xls_path = "F:\\lkx01\one_test\\xlsconverxml\\file\\test.xls";
+	string xls_path = "F:\\lkx01\\one_test\\xlsconverxml\\file\\test.xls";
 	XlsConverXml xlstoxml(xls_path);
 	xlstoxml.StartXlsConverXml();
 	getchar();

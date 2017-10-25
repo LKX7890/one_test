@@ -4,7 +4,7 @@
 XlsConverXml::XlsConverXml(const string &xls_file_path) : m_row_begin_read(0), m_xls(NULL)
 {
 	m_xls_file_path = xls_file_path;
-	this->GetXmlPath(xls_file_path, &m_xml_file_path);
+	this->GetXmlPathByXlsPath(xls_file_path, &m_xml_file_path);
 }
 
 XlsConverXml::~XlsConverXml()
@@ -17,18 +17,25 @@ bool XlsConverXml::StartXlsConverXml()
 	// 获取路径
 	if (m_xls_file_path.empty())
 	{
-		printf("%s, %s\n", __FUNCTION__, __LINE__);
+		printf("%s, %d\n", __FUNCTION__, __LINE__);
 		return false;
 	}
 
 	// 转换
-	bool ret = this->LoadXls();
+	bool ret = this->CreatBookAndLoadXls();
 	if (!ret) return false;
 
 	this->InitEachSheetNameAndRout();
 	this->InitEachSheetColType();
 	this->InitEachSheetColName();
+
 	tinyxml2::XMLDocument xmlDoc;
+	tinyxml2::XMLDeclaration *declaration = xmlDoc.NewDeclaration("version=\"1.0\" encoding=\"utf-8\"");
+	xmlDoc.LinkEndChild(declaration);
+
+	tinyxml2::XMLElement *config = xmlDoc.NewElement("config");
+	xmlDoc.InsertEndChild(config);
+
 	for (int sheet_index = 1; sheet_index < m_xls->sheetCount(); ++sheet_index)
 	{
 		this->SheetToXmlEle(&xmlDoc, sheet_index);
@@ -43,11 +50,11 @@ bool XlsConverXml::StartXlsConverXml()
 	return true;
 }
 
-void XlsConverXml::GetXmlPath(const string &xls_file_path, string *xml_path)
+void XlsConverXml::GetXmlPathByXlsPath(const string &xls_file_path, string *xml_path)
 {
 	if (xls_file_path.empty())
 	{
-		printf("%s, %s\n", __FUNCTION__, __LINE__);
+		printf("%s, %d\n", __FUNCTION__, __LINE__);
 		return;
 	}
 
@@ -59,30 +66,33 @@ void XlsConverXml::FormatFilePath(string &file_path, string *format_path)
 {
 	if (m_xls_file_path.empty())
 	{
-		printf("%s, %s\n", __FUNCTION__, __LINE__);
+		printf("%s, %d\n", __FUNCTION__, __LINE__);
 		return;
 	}
 	
 	string temp_path = file_path;
-	string::size_type first = temp_path.find_first_not_of("\\");
-	string::size_type last = temp_path.find_last_not_of("\\");
-	if (first == string::npos || last == string::npos)
-	{
-		printf("%s, %s\n", __FUNCTION__, __LINE__);
-		return;
-	}
+	//string::size_type first = temp_path.find_first_not_of("\\");
+	//string::size_type last = temp_path.find_last_not_of("\\");
+	//if (first == string::npos || last == string::npos)
+	//{
+	//	printf("%s, %d\n", __FUNCTION__, __LINE__);
+	//	return;
+	//}
 
-	while (first != string::npos)
-	{
-		string::size_type pos = first + 1;
-		temp_path.insert(pos, "\\");
-		first = temp_path.find_first_not_of("\\", pos + 1);
-	}
+	//while (first != string::npos)
+	//{
+	//	string::size_type pos = first + 1;
+	//	temp_path.insert(pos, "\\");
+	//	first = temp_path.find_first_not_of("\\", pos + 1);
+	//}
 
+	string xml = ".xml";
+	string::size_type pos = temp_path.find_last_of('.');
+	temp_path.replace(pos, 4, xml);
 	*format_path = temp_path;
 }
 
-bool XlsConverXml::LoadXls()
+bool XlsConverXml::CreatBookAndLoadXls()
 {
 	char exten_name[MAX_PATH] = { 0 };
 	this->GetFileExtenName(m_xls_file_path, exten_name);
@@ -96,13 +106,13 @@ bool XlsConverXml::LoadXls()
 	}
 	else
 	{
-		printf("%s, %s, %s\n", __FUNCTION__, __LINE__, "UnkownFileType");
+		printf("%s, %d, %s\n", __FUNCTION__, __LINE__, "UnkownFileType");
 		return false;
 	}
 
 	if (!m_xls->load(m_xls_file_path.c_str()))
 	{
-		printf("%s, %s, %s\n", __FUNCTION__, __LINE__, "LoadFileError");
+		printf("%s, %d, %s\n", __FUNCTION__, __LINE__, "LoadFileError");
 		return false;
 	}
 
@@ -116,13 +126,17 @@ void XlsConverXml::InitEachSheetNameAndRout()
 	{
 		return;
 	}
+	
+	// 表格下标，横，纵从0开始， firstRow, firstCol是从配置的所在行开始
+	int first_row = m_xls->getSheet(0)->firstRow();
+	int first_col = m_xls->getSheet(0)->firstCol();
 
-	m_xml_file_name = this->ReadCellContent(0, 1, 0);
-	m_row_begin_read = atoi(this->ReadCellContent(0, 1, 2));
+	m_xml_file_name = this->ReadCellContent(m_xls->getSheet(0), first_row, first_col);
+	m_row_begin_read = atoi(this->ReadCellContent(m_xls->getSheet(0), first_row, first_col + 1));
 
-	for (int sheet_index = 1, cfg_col = 2; NULL != ReadCellContent(0, 1, cfg_col); ++cfg_col)
+	for (int sheet_index = 1, cfg_col = 2; NULL != ReadCellContent(m_xls->getSheet(0), first_row, cfg_col); ++cfg_col)
 	{
-		m_cfg_sheet_map[sheet_index] = this->ReadCellContent(0, 1, cfg_col);
+		m_cfg_sheet_map[sheet_index] = this->ReadCellContent(m_xls->getSheet(0), first_row, cfg_col);
 	}
 }
 
@@ -167,14 +181,14 @@ void XlsConverXml::GetFileExtenName(const string& file_path, char exten_name[])
 {
 	if (file_path.empty())
 	{
-		printf("%s, %s\n", __FUNCTION__, __LINE__);
+		printf("%s, %d\n", __FUNCTION__, __LINE__);
 		return;
 	}
 
 	string::size_type last = file_path.find_last_of('.');
 	string temp_name = file_path.substr(last);
 	int strsize = temp_name.size();
-	printf_s(exten_name, strsize, "%s", temp_name.c_str());
+	memcpy(exten_name, temp_name.c_str(), strsize);
 	exten_name[strsize++] = '\0';
 }
 
@@ -182,12 +196,24 @@ int XlsConverXml::SheetToXmlEle(tinyxml2::XMLDocument *xmlDoc, int sheet_index)
 {
 	if (sheet_index <= 0 || sheet_index > m_xls->sheetCount())
 	{
-		printf("%s, %s, %s\n", __FUNCTION__, __LINE__, "SheetNoExist");
+		printf("%s, %d, %s\n", __FUNCTION__, __LINE__, "SheetNoExist");
+		return -1;
+	}
+
+	if (NULL == xmlDoc)
+	{
+		printf("%s, %d, %s\n", __FUNCTION__, __LINE__, "xmlDocNULL");
+		return -2;
 	}
 
 	const char* Element_name = m_cfg_sheet_map[sheet_index];
 	tinyxml2::XMLElement* root = xmlDoc->RootElement();
 	tinyxml2::XMLElement *sheet_element = xmlDoc->NewElement(Element_name);
+	if (NULL == root || NULL == sheet_element)
+	{
+		printf("%s, %d, %s\n", __FUNCTION__, __LINE__, "xmlDocNULL");
+		return -3;
+	}
 
 	// 遍历每个单元格
 	libxl::Sheet *sheet = m_xls->getSheet(sheet_index);
@@ -207,7 +233,7 @@ int XlsConverXml::SheetToXmlEle(tinyxml2::XMLDocument *xmlDoc, int sheet_index)
 	}
 
 	root->InsertEndChild(sheet_element);
-
+	printf("%s\n", "FinishConver");
 	return 0;
 }
 
@@ -215,7 +241,7 @@ int XlsConverXml::GetColType(const string &str)
 {
 	if (str.empty())
 	{
-		printf("%s, %s, %s\n", __FUNCTION__, __LINE__, "StringEmpty");
+		printf("%s, %d, %s\n", __FUNCTION__, __LINE__, "StringEmpty");
 		return -1000;
 	}
 

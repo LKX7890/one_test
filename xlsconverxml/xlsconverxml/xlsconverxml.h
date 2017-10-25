@@ -27,9 +27,9 @@ public:
 	~XlsConverXml();
 
 	bool StartXlsConverXml();
-	void GetXmlPath(const string &xls_file_path, string *xml_path);
+	void GetXmlPathByXlsPath(const string &xls_file_path, string *xml_path);
 	void FormatFilePath(string &file_path, string *format_path);
-	bool LoadXls();
+	bool CreatBookAndLoadXls();
 	void InitEachSheetNameAndRout();
 	void InitEachSheetColName();
 	void InitEachSheetColType();
