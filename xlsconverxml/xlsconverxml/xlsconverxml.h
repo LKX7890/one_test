@@ -13,11 +13,11 @@ using namespace std;
 
 enum ColType
 {
-	COLTYPE_CS,
-	COLTYPE_C,
-	COLTYPE_S,
-	COLTYPE_CS_ITEM,
-	COLTYPE_CS_ITEM_LIST,
+	COLTYPE_CS = 0,
+	COLTYPE_C = 1,
+	COLTYPE_S = 2,
+	COLTYPE_CS_ITEM = 3,
+	COLTYPE_CS_ITEM_LIST = 4,
 };
 
 class XlsConverXml

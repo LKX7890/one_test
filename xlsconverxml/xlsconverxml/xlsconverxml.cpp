@@ -35,7 +35,7 @@ bool XlsConverXml::StartXlsConverXml()
 
 	tinyxml2::XMLElement *config = xmlDoc.NewElement("config");
 	xmlDoc.InsertEndChild(config);
-
+	
 	for (int sheet_index = 1; sheet_index < m_xls->sheetCount(); ++sheet_index)
 	{
 		this->SheetToXmlEle(&xmlDoc, sheet_index);
@@ -149,10 +149,11 @@ void XlsConverXml::InitEachSheetColName()
 
 	for (int sheet_index = 1; sheet_index < m_xls->sheetCount(); ++sheet_index)
 	{
-		for (int col_index = 0; NULL != ReadCellContent(m_xls->getSheet(sheet_index), m_row_begin_read + 2, col_index); ++col_index)
+		int first_row = m_xls->getSheet(sheet_index)->firstRow();
+		for (int col_index = 0; NULL != ReadCellContent(m_xls->getSheet(sheet_index), first_row + 2, col_index); ++col_index)
 		{
-			const char* text = this->ReadCellContent(m_xls->getSheet(sheet_index), m_row_begin_read + 2, col_index);
 			map<int, const char*> &sheet_col_map = m_col_name_map[sheet_index];
+			const char* text = this->ReadCellContent(m_xls->getSheet(sheet_index), first_row + 2, col_index);
 			sheet_col_map[col_index] = text;
 		}
 	}
@@ -167,10 +168,12 @@ void XlsConverXml::InitEachSheetColType()
 
 	for (int sheet_index = 1; sheet_index < m_xls->sheetCount(); ++sheet_index)
 	{
-		for (int col_index = 0; NULL != ReadCellContent(m_xls->getSheet(sheet_index), m_row_begin_read, col_index); ++col_index)
+		int first_row = m_xls->getSheet(sheet_index)->firstRow();
+		for (int col_index = 0; NULL != ReadCellContent(m_xls->getSheet(sheet_index), first_row, col_index); ++col_index)
 		{
-			const char* text = this->ReadCellContent(m_xls->getSheet(sheet_index), m_row_begin_read, col_index);
-			int col_type = this->GetColType(text);
+			const char* text = this->ReadCellContent(m_xls->getSheet(sheet_index), first_row, col_index);
+			string str_text(text);
+			int col_type = this->GetColType(str_text);
 			map<int, int> &sheet_col_type_map = m_col_type_map[sheet_index];
 			sheet_col_type_map[col_index] = col_type;
 		}
@@ -207,6 +210,11 @@ int XlsConverXml::SheetToXmlEle(tinyxml2::XMLDocument *xmlDoc, int sheet_index)
 	}
 
 	const char* Element_name = m_cfg_sheet_map[sheet_index];
+	if (NULL == Element_name)
+	{
+		printf("%s, %d, %s\n", __FUNCTION__, __LINE__, "Element_nameError");
+	}
+
 	tinyxml2::XMLElement* root = xmlDoc->RootElement();
 	tinyxml2::XMLElement *sheet_element = xmlDoc->NewElement(Element_name);
 	if (NULL == root || NULL == sheet_element)
@@ -217,8 +225,18 @@ int XlsConverXml::SheetToXmlEle(tinyxml2::XMLDocument *xmlDoc, int sheet_index)
 
 	// 遍历每个单元格
 	libxl::Sheet *sheet = m_xls->getSheet(sheet_index);
-	for (int row_index = m_row_begin_read + 3; row_index < sheet->lastRow(); ++row_index)
+	if (NULL == sheet)
 	{
+		printf("%s, %d, %s\n", __FUNCTION__, __LINE__, "SheetNULL");
+		return -4;
+	}
+
+	int first_row = m_xls->getSheet(sheet_index)->firstRow();
+	for (int row_index = first_row + 3; row_index < sheet->lastRow(); ++row_index)
+	{
+		tinyxml2::XMLElement* datanode = xmlDoc->NewElement("data");
+		sheet_element->InsertEndChild(datanode);
+
 		map<int, int>& sheet_map = m_col_type_map[sheet_index];
 
 		for (int col_index = 0; col_index < sheet->lastCol(); ++col_index)
@@ -226,10 +244,8 @@ int XlsConverXml::SheetToXmlEle(tinyxml2::XMLDocument *xmlDoc, int sheet_index)
 			int col_type = sheet_map[col_index];
 
 			// 往文件写单元格内容
-			this->WriteCellTextToXml(xmlDoc, sheet_element, sheet_index, row_index, col_index, col_type);
+			this->WriteCellTextToXml(xmlDoc, datanode, sheet_index, row_index, col_index, col_type);
 		}
-
-		tinyxml2::XMLElement* userNode = xmlDoc->NewElement("User");
 	}
 
 	root->InsertEndChild(sheet_element);
@@ -246,23 +262,23 @@ int XlsConverXml::GetColType(const string &str)
 	}
 
 	const char* temp_str = str.c_str();
-	if (strcmp(temp_str, "cs"))
+	if (strcmp(temp_str, "cs") == 0)
 	{
 		return COLTYPE_CS;
 	}
-	else if (strcmp(temp_str, "s"))
+	else if (strcmp(temp_str, "s") == 0)
 	{
 		return COLTYPE_S;
 	}
-	else if (strcmp(temp_str, "c"))
+	else if (strcmp(temp_str, "c") == 0)
 	{
 		return COLTYPE_C;
 	}
-	else if (strcmp(temp_str, "cs,item"))
+	else if (strcmp(temp_str, "cs,item") == 0)
 	{
 		return COLTYPE_CS_ITEM;
 	}
-	else if (strcmp(temp_str, "cs,itemlist"))
+	else if (strcmp(temp_str, "cs,itemlist") == 0)
 	{
 		return COLTYPE_CS_ITEM_LIST;
 	}
@@ -310,7 +326,7 @@ const char* XlsConverXml::ReadCellContent(libxl::Sheet *sheet, const int32_t row
 				const int32_t textUtf8StrLen = 1024 * 5;
 				static char textUtf8Str[textUtf8StrLen];
 				static WCHAR wcharTemp[textUtf8StrLen];
-				GBKToUTF8(text, wcharTemp, textUtf8Str, textUtf8StrLen);
+				this->GBKToUTF8(text, wcharTemp, textUtf8Str, textUtf8StrLen);
 				return textUtf8Str;
 			}
 		} while (0);
@@ -341,8 +357,11 @@ const char* XlsConverXml::ReadCellContent(libxl::Sheet *sheet, const int32_t row
 
 void XlsConverXml::WriteCellTextToXml(tinyxml2::XMLDocument *xmlDoc, tinyxml2::XMLElement* include_on, int sheet, int row, int col, int col_type)
 {
-	const char* text = this->GetColNameBySheetAndCol(sheet, col);
-	const char* value = this->ReadCellContent(m_xls->getSheet(sheet), row, col);
+
+
+	// 读单元格名称和值
+	const char* cell_name = this->GetColNameBySheetAndCol(sheet, col);
+	const char* cell_value = this->ReadCellContent(m_xls->getSheet(sheet), row, col);
 
 	switch (col_type)
 	{
@@ -354,10 +373,10 @@ void XlsConverXml::WriteCellTextToXml(tinyxml2::XMLDocument *xmlDoc, tinyxml2::X
 
 	case COLTYPE_S:
 	{
-		tinyxml2::XMLElement* textnode = xmlDoc->NewElement(text);
-		tinyxml2::XMLText* value_text = xmlDoc->NewText(value);
-		textnode->InsertEndChild(value_text);
-		include_on->InsertEndChild(textnode);
+		tinyxml2::XMLElement* namenode = xmlDoc->NewElement(cell_name);
+		tinyxml2::XMLText* cellvalue = xmlDoc->NewText(cell_value);
+		namenode->InsertEndChild(cellvalue);
+		include_on->InsertEndChild(namenode);
 	}
 	break;
 
