@@ -7,7 +7,7 @@ Socket::Socket(DnsUrl const &dnsUrl) : m_sockfd(-1), m_dnsUrl(dnsUrl)
 
 }
 
-~Socket::~Socket(void)
+Socket::~Socket(void)
 {
 	if (m_sockfd >= 0)
 	{

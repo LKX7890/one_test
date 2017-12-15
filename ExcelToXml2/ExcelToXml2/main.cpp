@@ -115,19 +115,19 @@ int32_t BookToXmlDoc(libxl::Book* book, tinyxml2::XMLDocument *xmlDoc)
 
 
 
-	//	if (!IsConfigSheet(book->getSheet(i)->name())){ continue; }
+		if (!IsConfigSheet(book->getSheet(i)->name())){ continue; }
 
-	//	// 获取表格名称
-	//	tinyxml2::XMLElement *ele = xmlDoc->NewElement(book->getSheet(i)->name() + 1);
-	//	xmlDoc->LinkEndChild(ele);
+		// 获取表格名称
+		tinyxml2::XMLElement *ele = xmlDoc->NewElement(book->getSheet(i)->name() + 1);
+		xmlDoc->LinkEndChild(ele);
 
-	//	// 表格转成xml文件
-	//	// printf("%s\n", book->getSheet(i)->name());
-	//	int32_t ret = SheetToXmlEle(book->getSheet(i), xmlDoc, ele);
-	//	if (ret != enmErrorDef_OK)
-	//	{
-	//		return ret;
-	//	}
+		// 表格转成xml文件
+		// printf("%s\n", book->getSheet(i)->name());
+		int32_t ret = SheetToXmlEle(book->getSheet(i), xmlDoc, ele);
+		if (ret != enmErrorDef_OK)
+		{
+			return ret;
+		}
 	}
 	return enmErrorDef_OK;
 }

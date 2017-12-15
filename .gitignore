@@ -14,3 +14,11 @@ WebCrawler/WebCrawler/WebCrawler.vcxproj.filters
 WebCrawler/WebCrawler/WebCrawler.vcxproj.filters
 WebCrawler/WebCrawler/WebCrawler.vcxproj.filters
 *.ipch
+WebCrawler/Plugins/Plugins.vcxproj.filters
+ExcelToXml2/Debug/V-黄金VIP.xls
+ExcelToXml2/ExcelToXml2/main.cpp
+ExcelToXml2/ExcelToXml2/xml/V-黄金VIP.xml
+ExcelToXml2/ExcelToXml2/main.cpp
+ExcelToXml2/ExcelToXml2/main.cpp
+ExcelToXml2/ExcelToXml2/main.cpp
+ExcelToXml2/ExcelToXml2/main.cpp

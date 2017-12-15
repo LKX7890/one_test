@@ -11,6 +11,8 @@
 
 using namespace std;
 
+static const int ROL_BEGIN_WRITE_IN_XML = 1; // 从注释后第几行为写入xml的内容
+
 enum ColType
 {
 	COLTYPE_CS = 0,
@@ -18,6 +20,19 @@ enum ColType
 	COLTYPE_S = 2,
 	COLTYPE_CS_ITEM = 3,
 	COLTYPE_CS_ITEM_LIST = 4,
+};
+
+struct ColAttr
+{
+	int col_type;						// 列类型
+	std::string col_name;				// 列字段名称
+};
+
+struct SheetDefineInfo
+{
+	int sheet_index;					// 表索引
+	std::string sheet_name;				// 表名称
+	std::map<int, ColAttr> col_info_list;	// 单元格信息
 };
 
 class XlsConverXml
@@ -47,8 +62,6 @@ private:
 	string m_xml_file_name;								// xml文件名称
 	int m_row_begin_read;								// 配置从第几行开始(读表规则)
 	libxl::Book* m_xls;									// 加载成book的xls文件
-	map<int, const char*> m_cfg_sheet_map;				// 每个表名称
-	map<int, map<int, int> > m_col_type_map;			// 每列类型
-	map<int, map<int, const char*> > m_col_name_map;	// 每个表的每一列字段
+	std::map<int, SheetDefineInfo> m_sheet_info_list;		// 表信息
 };
 #endif

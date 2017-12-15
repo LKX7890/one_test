@@ -126,6 +126,8 @@ void XlsConverXml::InitEachSheetNameAndRout()
 	{
 		return;
 	}
+
+	SheetDefineInfo sheet_info;
 	
 	// 表格下标，横，纵从0开始， firstRow, firstCol是从配置的所在行开始
 	int first_row = m_xls->getSheet(0)->firstRow();
@@ -134,51 +136,71 @@ void XlsConverXml::InitEachSheetNameAndRout()
 	m_xml_file_name = this->ReadCellContent(m_xls->getSheet(0), first_row, first_col);
 	m_row_begin_read = atoi(this->ReadCellContent(m_xls->getSheet(0), first_row, first_col + 1));
 
-	for (int sheet_index = 1, cfg_col = 2; NULL != ReadCellContent(m_xls->getSheet(0), first_row, cfg_col); ++cfg_col)
-	{
-		m_cfg_sheet_map[sheet_index] = this->ReadCellContent(m_xls->getSheet(0), first_row, cfg_col);
-	}
-}
-
-void XlsConverXml::InitEachSheetColName()
-{
-	if (NULL == m_xls)
-	{
-		return;
-	}
-
 	for (int sheet_index = 1; sheet_index < m_xls->sheetCount(); ++sheet_index)
 	{
+		// 读入表索引和表名称
+		SheetDefineInfo sheet_info;
+		sheet_info.sheet_index = sheet_index;
+		sheet_info.sheet_name = this->ReadCellContent(m_xls->getSheet(0), first_row, 2);		//配置表第一个目录表,从第三个格子起为表名字段
+
+		// 读入每个表的字段和数据
 		int first_row = m_xls->getSheet(sheet_index)->firstRow();
-		for (int col_index = 0; NULL != ReadCellContent(m_xls->getSheet(sheet_index), first_row + 2, col_index); ++col_index)
+		int read_row = first_row + 2;
+		for (int col_index = 0; NULL != ReadCellContent(m_xls->getSheet(sheet_index), read_row, col_index); ++read_row,++col_index)
 		{
-			map<int, const char*> &sheet_col_map = m_col_name_map[sheet_index];
-			const char* text = this->ReadCellContent(m_xls->getSheet(sheet_index), first_row + 2, col_index);
-			sheet_col_map[col_index] = text;
+			ColAttr col_attr;
+			std::string str_col_type = this->ReadCellContent(m_xls->getSheet(sheet_index), first_row, col_index);
+			col_attr.col_type = this->GetColType(str_col_type);
+			col_attr.col_name = this->ReadCellContent(m_xls->getSheet(sheet_index), first_row + 2, col_index);
+
+			sheet_info.col_info_list.insert(std::pair<int, ColAttr>(col_index, col_attr));
 		}
+
+		m_sheet_info_list.insert(std::pair<int, SheetDefineInfo>(sheet_index, sheet_info));
 	}
+
+
 }
 
-void XlsConverXml::InitEachSheetColType()
-{
-	if (NULL == m_xls)
-	{
-		return;
-	}
+//void XlsConverXml::InitEachSheetColName()
+//{
+//	if (NULL == m_xls)
+//	{
+//		return;
+//	}
+//
+//	for (int sheet_index = 1; sheet_index < m_xls->sheetCount(); ++sheet_index)
+//	{
+//		int first_row = m_xls->getSheet(sheet_index)->firstRow();
+//		for (int col_index = 0; NULL != ReadCellContent(m_xls->getSheet(sheet_index), first_row + 2, col_index); ++col_index)
+//		{
+//			map<int, const char*> &sheet_col_map = m_col_name_map[sheet_index];
+//			const char* text = this->ReadCellContent(m_xls->getSheet(sheet_index), first_row + 2, col_index);
+//			sheet_col_map[col_index] = text;
+//		}
+//	}
+//}
 
-	for (int sheet_index = 1; sheet_index < m_xls->sheetCount(); ++sheet_index)
-	{
-		int first_row = m_xls->getSheet(sheet_index)->firstRow();
-		for (int col_index = 0; NULL != ReadCellContent(m_xls->getSheet(sheet_index), first_row, col_index); ++col_index)
-		{
-			const char* text = this->ReadCellContent(m_xls->getSheet(sheet_index), first_row, col_index);
-			string str_text(text);
-			int col_type = this->GetColType(str_text);
-			map<int, int> &sheet_col_type_map = m_col_type_map[sheet_index];
-			sheet_col_type_map[col_index] = col_type;
-		}
-	}
-}
+//void XlsConverXml::InitEachSheetColType()
+//{
+//	if (NULL == m_xls)
+//	{
+//		return;
+//	}
+//
+//	for (int sheet_index = 1; sheet_index < m_xls->sheetCount(); ++sheet_index)
+//	{
+//		int first_row = m_xls->getSheet(sheet_index)->firstRow();
+//		for (int col_index = 0; NULL != ReadCellContent(m_xls->getSheet(sheet_index), first_row, col_index); ++col_index)
+//		{
+//			const char* text = this->ReadCellContent(m_xls->getSheet(sheet_index), first_row, col_index);
+//			string str_text(text);
+//			int col_type = this->GetColType(str_text);
+//			map<int, int> &sheet_col_type_map = m_col_type_map[sheet_index];
+//			sheet_col_type_map[col_index] = col_type;
+//		}
+//	}
+//}
 
 void XlsConverXml::GetFileExtenName(const string& file_path, char exten_name[])
 {
@@ -209,7 +231,7 @@ int XlsConverXml::SheetToXmlEle(tinyxml2::XMLDocument *xmlDoc, int sheet_index)
 		return -2;
 	}
 
-	const char* Element_name = m_cfg_sheet_map[sheet_index];
+	const char* Element_name = Element_name = m_sheet_info_list[sheet_index].sheet_name.c_str();
 	if (NULL == Element_name)
 	{
 		printf("%s, %d, %s\n", __FUNCTION__, __LINE__, "Element_nameError");
@@ -237,13 +259,10 @@ int XlsConverXml::SheetToXmlEle(tinyxml2::XMLDocument *xmlDoc, int sheet_index)
 		tinyxml2::XMLElement* datanode = xmlDoc->NewElement("data");
 		sheet_element->InsertEndChild(datanode);
 
-		map<int, int>& sheet_map = m_col_type_map[sheet_index];
-
 		for (int col_index = 0; col_index < sheet->lastCol(); ++col_index)
 		{
-			int col_type = sheet_map[col_index];
-
 			// 往文件写单元格内容
+			int col_type = m_sheet_info_list[sheet_index].col_info_list[col_index].col_type;
 			this->WriteCellTextToXml(xmlDoc, datanode, sheet_index, row_index, col_index, col_type);
 		}
 	}
@@ -291,8 +310,7 @@ int XlsConverXml::GetColType(const string &str)
 const char* XlsConverXml::GetColNameBySheetAndCol(int sheet_index, int col_index)
 {
 	// 判断
-	map<int, const char*> &sheet_col_map = m_col_name_map[sheet_index];
-	return sheet_col_map[col_index];
+	return m_sheet_info_list[sheet_index].col_info_list[col_index].col_name.c_str();
 }
 
 const char* XlsConverXml::ReadCellContent(libxl::Sheet *sheet, const int32_t row, const int32_t col)
