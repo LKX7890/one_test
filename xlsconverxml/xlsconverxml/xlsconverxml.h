@@ -46,8 +46,8 @@ public:
 	void FormatFilePath(string &file_path, string *format_path);
 	bool CreatBookAndLoadXls();
 	void InitEachSheetNameAndRout();
-	void InitEachSheetColName();
-	void InitEachSheetColType();
+	//void InitEachSheetColName();
+	//void InitEachSheetColType();
 	void GetFileExtenName(const string& file_path, char exten_name[]);
 	int SheetToXmlEle(tinyxml2::XMLDocument *xmlDoc, int sheet_index);
 	int GetColType(const string &str);

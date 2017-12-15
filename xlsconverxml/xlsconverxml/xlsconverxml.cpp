@@ -26,8 +26,8 @@ bool XlsConverXml::StartXlsConverXml()
 	if (!ret) return false;
 
 	this->InitEachSheetNameAndRout();
-	this->InitEachSheetColType();
-	this->InitEachSheetColName();
+	//this->InitEachSheetColType();
+	//this->InitEachSheetColName();
 
 	tinyxml2::XMLDocument xmlDoc;
 	tinyxml2::XMLDeclaration *declaration = xmlDoc.NewDeclaration("version=\"1.0\" encoding=\"utf-8\"");
@@ -352,18 +352,18 @@ const char* XlsConverXml::ReadCellContent(libxl::Sheet *sheet, const int32_t row
 		do
 		{
 			const int32_t doubleStrLen = 32;
-			static char doubleStr[doubleStrLen];
-			sprintf_s(doubleStr, doubleStrLen, "%f", sheet->readNum(row, col));
+			static char doubleStr[doubleStrLen] = { 0 };
+			sprintf_s(doubleStr, doubleStrLen, "%g", sheet->readNum(row, col));
 			for (int32_t i = strlen(doubleStr) - 1; i >= 0; --i)
 			{
-				if (doubleStr[i] > '0' && doubleStr[i] <= '9')
+				if (doubleStr[i] >= '0' && doubleStr[i] <= '9')
 				{
 					break;
 				}
-				else if ((doubleStr[i] == '0' || doubleStr[i] == '.') && (i != 0))
-				{
+				/*	else if ((doubleStr[i] == '0' || doubleStr[i] == '.') && (i != 0))
+					{
 					doubleStr[i] = 0;
-				}
+					}*/
 			}
 			return doubleStr;
 		} while (0);

@@ -1,0 +1,23 @@
+<?version="1.0" encoding="utf-8"?>
+<config>
+    <testing>
+        <data>
+            <seq>1</seq>
+            <name>张三</name>
+            <sex>男</sex>
+            <old_year>1000</old_year>
+        </data>
+        <data>
+            <seq>2</seq>
+            <name>李四</name>
+            <sex>男</sex>
+            <old_year>30</old_year>
+        </data>
+        <data>
+            <seq>3</seq>
+            <name>王五</name>
+            <sex>男</sex>
+            <old_year>10086</old_year>
+        </data>
+    </testing>
+</config>
