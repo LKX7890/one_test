@@ -1,11 +1,11 @@
 #include <cstdlib>
 #include <cstdio>
 
-#include "xlsconverxml/xlsconverxml.h"
+#include "xlsconverxml.h"
 
 int main()
 {
-	string xls_path = "G:\\one_test\\xlsconverxml\\file\\test.xls";
+	std::string xls_path = ".\\..\\file\\test.xls";
 	XlsConverXml xlstoxml(xls_path);
 	xlstoxml.StartXlsConverXml();
 	getchar();

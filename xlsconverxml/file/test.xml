@@ -20,4 +20,25 @@
             <old_year>10086</old_year>
         </data>
     </testing>
+    <item>
+        <data>
+            <cost_item>
+                <item_id>37872</item_id>
+                <item_num>1</item_num>
+                <is_bind>1</is_bind>
+            </cost_item>
+            <reward_item_list>
+                <reward_item>
+                    <item_id>27866</item_id>
+                    <item_num>1</item_num>
+                    <is_bind>0</is_bind>
+                </reward_item>
+                <reward_item>
+                    <item_id>27859</item_id>
+                    <item_num>1</item_num>
+                    <is_bind>1</is_bind>
+                </reward_item>
+            </reward_item_list>
+        </data>
+    </item>
 </config>
