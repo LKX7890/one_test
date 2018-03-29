@@ -1,0 +1,6 @@
+C:\Users\Administrator\Desktop\nettest\socketclient\socketclient\bin\Debug\socketclient.exe.config
+C:\Users\Administrator\Desktop\nettest\socketclient\socketclient\bin\Debug\socketclient.exe
+C:\Users\Administrator\Desktop\nettest\socketclient\socketclient\bin\Debug\socketclient.pdb
+C:\Users\Administrator\Desktop\nettest\socketclient\socketclient\obj\Debug\socketclient.exe
+C:\Users\Administrator\Desktop\nettest\socketclient\socketclient\obj\Debug\socketclient.pdb
+C:\Users\Administrator\Desktop\nettest\socketclient\socketclient\obj\Debug\socketclient.csprojResolveAssemblyReference.cache
